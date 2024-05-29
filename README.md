@@ -1,11 +1,15 @@
 # c18-112-n-react-agregarback
 
-# Cooking Socially project
+# Cooking Zone project
 
 Descripción:
-CocinaConectada es una innovadora red social de cocina diseñada para entusiastas culinarios de todos los niveles. Permite a los usuarios buscar, compartir, guardar, calificar y comentar recetas, así como seguir a otros usuarios para inspirarse mutuamente. La plataforma fomenta la creatividad en la cocina, ofreciendo herramientas avanzadas de búsqueda, contenido multimedia enriquecido y análisis nutricional detallado para cada receta.
+Cooking Zone
 
+Cooking Zone es una innovadora red social de cocina diseñada para entusiastas culinarios de todos los niveles. En Cooking Zone, los usuarios pueden buscar, compartir, guardar, calificar y comentar recetas, además de seguir a otros usuarios para inspirarse mutuamente. La plataforma fomenta la creatividad en la cocina con herramientas avanzadas de búsqueda, contenido multimedia enriquecido y análisis nutricional detallado para cada receta.
 
+Con Cooking Zone, descubrirás recetas fáciles de realizar con ingredientes que probablemente ya tienes en tu despensa. Ideal para quienes buscan cocinar en poco tiempo sin sacrificar el sabor ni la nutrición. 
+Recetas de todo el mundo, intrigantes y poco conocidas.
+¡Únete a nuestra comunidad y transforma tu experiencia culinaria!
 
 
 ## Nuestro equipo
@@ -15,6 +19,9 @@ Maite Canaviri Luque - Dev FrontEnd [![portfolio](https://img.shields.io/badge/G
 [![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/)
 
 Antonella Analis Vigliano - QA Tester [![portfolio](https://img.shields.io/badge/GITHUB-000?style=for-the-badge&logo=ko-fi&logoColor=white)](https://katherineoelsner.com/)
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/)
+
+Natalia Delgado - Dev FullStack [![portfolio](https://img.shields.io/badge/GITHUB-000?style=for-the-badge&logo=ko-fi&logoColor=white)](https://katherineoelsner.com/)
 [![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/)
 
 
