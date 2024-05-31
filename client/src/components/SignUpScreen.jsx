@@ -1,18 +1,28 @@
 import React from "react";
+import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
 export const SignUpScreen = () => {
+  const { register, handleSubmit } = useForm();
+
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
   return (
     <section className="bg-gray-50">
       <div className="mx-auto flex flex-col items-center justify-center px-6 py-8">
         <h1 className="mb-2 flex items-center text-3xl font-bold text-gray-900">
-          Bienvenido a Cooking Zone
+          Bienvenido a QUERAPIDA
         </h1>
         <div className="w-full max-w-xl space-y-4 p-6 sm:p-8 md:space-y-6">
-          <h1 className="font-semi-bold text-xl leading-tight tracking-tight text-gray-900 md:text-xl">
+          <h2 className="font-semi-bold text-xl leading-tight tracking-tight text-gray-900 md:text-xl">
             Por favor ingresa tus datos para crear una cuenta
-          </h1>
-          <form className="space-y-4 md:space-y-6" action="#">
+          </h2>
+          <form
+            className="space-y-4 md:space-y-6"
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <div>
               <label
                 htmlFor="name"
@@ -22,8 +32,7 @@ export const SignUpScreen = () => {
               </label>
               <input
                 type="name"
-                name="name"
-                id="name"
+                {...register("name")}
                 className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 sm:text-sm"
                 placeholder="Introduce tu nombre completo"
                 required=""
@@ -38,8 +47,7 @@ export const SignUpScreen = () => {
               </label>
               <input
                 type="email"
-                name="email"
-                id="email"
+                {...register("email")}
                 className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 sm:text-sm"
                 placeholder="Introduce tu correo electrónico"
                 required=""
@@ -54,8 +62,7 @@ export const SignUpScreen = () => {
               </label>
               <input
                 type="password"
-                name="password"
-                id="password"
+                {...register("password")}
                 placeholder="Crea una contraseña segura"
                 className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 sm:text-sm"
                 required=""
@@ -70,8 +77,7 @@ export const SignUpScreen = () => {
               </label>
               <input
                 type="password"
-                name="password2"
-                id="password2"
+                {...register("password2")}
                 placeholder="Repite la contraseña"
                 className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 sm:text-sm"
                 required=""

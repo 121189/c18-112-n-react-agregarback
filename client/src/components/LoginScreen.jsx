@@ -1,7 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 export const LoginScreen = () => {
+  const { register, handleSubmit } = useForm();
+
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
   return (
     <section className="bg-gray-50">
       <div className="mx-auto flex flex-col items-center justify-center px-6 py-8 md:h-screen lg:py-0">
@@ -9,10 +16,13 @@ export const LoginScreen = () => {
           Bienvenido de nuevo
         </h1>
         <div className="w-full max-w-xl space-y-4 p-6 sm:p-8 md:space-y-6">
-          <h1 className="font-semi-bold text-xl leading-tight tracking-tight text-gray-900 md:text-xl">
+          <h2 className="font-semi-bold text-xl leading-tight tracking-tight text-gray-900 md:text-xl">
             Por favor ingresa tus datos para acceder a tu cuenta
-          </h1>
-          <form className="space-y-4 md:space-y-6" action="#">
+          </h2>
+          <form
+            className="space-y-4 md:space-y-6"
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <div>
               <label
                 htmlFor="email"
@@ -22,8 +32,7 @@ export const LoginScreen = () => {
               </label>
               <input
                 type="email"
-                name="email"
-                id="email"
+                {...register("email")}
                 className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 sm:text-sm"
                 placeholder="Introduce tu correo electrónico"
                 required=""
@@ -38,8 +47,7 @@ export const LoginScreen = () => {
               </label>
               <input
                 type="password"
-                name="password"
-                id="password"
+                {...register("password")}
                 placeholder="Introduce tu contraseña"
                 className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 sm:text-sm"
                 required=""
