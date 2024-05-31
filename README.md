@@ -12,6 +12,9 @@ Recetas de todo el mundo, intrigantes y poco conocidas.
 
 ¡Únete a nuestra comunidad, transforma tu experiencia culinaria y digamos junt@s QUERAPIDA!
 
+## Documentación
+[Documentación](https://drive.google.com/drive/folders/18q-AU_P1FjuudIUSE-0s0ehn39Sd-PeB?usp=drive_link)
+
 
 
 ## Nuestro equipo
