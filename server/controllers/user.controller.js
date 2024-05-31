@@ -197,7 +197,7 @@ module.exports.login = async (req, res) => {
         /* Si no existe finaliza */
         if (!user) {
             res.status(404);
-            res.json({ error: "User not encontrado" });
+            res.json({ error: "Usuario no encontrado" });
             return;
         }
         /* Busca si el usuario tiene token activo */
