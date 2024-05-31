@@ -1,8 +1,16 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { LoginScreen } from "./components/LoginScreen";
+import { SignUpScreen } from "./components/SignUpScreen";
+
 function App() {
   return (
-    <>
-      <h1 className="text-4xl font-semibold text-violet-600">Hello world!</h1>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<LoginScreen />} />
+        <Route path="/login" element={<LoginScreen />} />
+        <Route path="/sign-up" element={<SignUpScreen />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
