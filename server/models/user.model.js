@@ -15,7 +15,7 @@ const UserSchema = new mongoose.Schema(
             validate: {
                 validator: (val) =>
                   /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(val),
-                message: "Please enter a valid email",
+                message: (props) => `${props.value} no es un email válido. Asegúrate de que siga el formato: nombre@dominio.com`,
               },
         },
         password: {
@@ -27,7 +27,7 @@ const UserSchema = new mongoose.Schema(
                     val
                   ),
                 message:
-                  "Password must have at least one uppercase, one lowercase, one number, one special character",
+                  "La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un carácter especial.",
               },
         },
         role: {
