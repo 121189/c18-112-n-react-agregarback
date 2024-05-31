@@ -4,7 +4,6 @@ const DB_NAME = "Cookingzone";
 
 mongoose.set('strictQuery', false);//importante
 mongoose.connect(`mongodb://127.0.0.1/${DB_NAME}`, {
-    useNewUrlParser: true,
     useUnifiedTopology: true,
 })
     .then(() => console.log("CONNECTED TO DB"))
