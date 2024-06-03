@@ -20,8 +20,12 @@ export const userSlice = createSlice({
       state.user.token = accessToken;
       state.isLoggedIn = true;
     },
+    logout: (state, action) => {
+      state.isLoggedIn = false;
+      state.user = {};
+    },
   },
 });
 
-export const { login } = userSlice.actions;
+export const { login, logout } = userSlice.actions;
 export default userSlice.reducer;

@@ -5,6 +5,10 @@ import { useSelector } from "react-redux";
 import { LoginScreen } from "./components/LoginScreen";
 import { SignUpScreen } from "./components/SignUpScreen";
 import { HomeScreen } from "./components/HomeScreen";
+import Navbar from "./components/Navbar";
+import CreateRecipeScreen from "./components/CreateRecipeScreen";
+import ProfileScreen from "./components/ProfileScreen";
+import SearchRecipesScreen from "./components/SearchRecipesScreen";
 
 function App() {
   const { isLoggedIn, user } = useSelector((state) => state.user);
@@ -23,10 +27,14 @@ function App() {
 
   return (
     <BrowserRouter>
+      <Navbar />
       <Routes>
         <Route path="/" element={<HomeScreen />} />
         <Route path="/login" element={<LoginScreen />} />
         <Route path="/sign-up" element={<SignUpScreen />} />
+        <Route path="/create-recipe" element={<CreateRecipeScreen />} />
+        <Route path="/profile" element={<ProfileScreen />} />
+        <Route path="/search" element={<SearchRecipesScreen />} />
       </Routes>
     </BrowserRouter>
   );
