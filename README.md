@@ -77,3 +77,11 @@ Social
 ![Slack](https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white)
 ![Google Meet](https://img.shields.io/badge/GoogleMeet-00AC47?style=for-the-badge&logo=slack&logoColor=white)
 
+## Documentación QA
+
+[Documentación QA](https://drive.google.com/drive/folders/18q-AU_P1FjuudIUSE-0s0ehn39Sd-PeB?usp=sharing)
+
+Informe de Software
+
+Test Plan
+
