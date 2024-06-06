@@ -35,6 +35,37 @@ const UserSchema = new mongoose.Schema(
             enum: ["admin", "user"],
             default: "user",
         },
+        image:{
+          type: String,
+        },
+        favorites:{
+          type:[
+            {
+              type: mongoose.Schema.Types.ObjectId,
+              ref: "Recipes",
+            },
+          ],
+          default: [],
+        },
+        following:{
+          type:[
+            {
+              type: mongoose.Schema.Types.ObjectId,
+              ref: "User",
+            },
+          ],
+          default: [],
+        },
+        followers:{
+          type:[
+            {
+              type: mongoose.Schema.Types.ObjectId,
+              ref: "User",
+            },
+          ],
+          default: [],
+        },
+
     }, { timestamps: true }
 );
 
