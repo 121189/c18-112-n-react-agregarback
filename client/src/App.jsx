@@ -9,6 +9,7 @@ import Navbar from "./components/Navbar";
 import CreateRecipeScreen from "./components/CreateRecipeScreen";
 import ProfileScreen from "./components/ProfileScreen";
 import SearchRecipesScreen from "./components/SearchRecipesScreen";
+import FeedScreen from "./components/FeedScreen";
 
 function App() {
   const { isLoggedIn, user } = useSelector((state) => state.user);
@@ -28,14 +29,17 @@ function App() {
   return (
     <BrowserRouter>
       <Navbar />
-      <Routes>
-        <Route path="/" element={<HomeScreen />} />
-        <Route path="/login" element={<LoginScreen />} />
-        <Route path="/sign-up" element={<SignUpScreen />} />
-        <Route path="/create-recipe" element={<CreateRecipeScreen />} />
-        <Route path="/profile" element={<ProfileScreen />} />
-        <Route path="/search" element={<SearchRecipesScreen />} />
-      </Routes>
+      <main>
+        <Routes>
+          <Route path="/" element={<HomeScreen />} />
+          <Route path="/login" element={<LoginScreen />} />
+          <Route path="/sign-up" element={<SignUpScreen />} />
+          <Route path="/create-recipe" element={<CreateRecipeScreen />} />
+          <Route path="/profile" element={<ProfileScreen />} />
+          <Route path="/search" element={<SearchRecipesScreen />} />
+          <Route path="/feed" element={<FeedScreen />} />
+        </Routes>
+      </main>
     </BrowserRouter>
   );
 }
