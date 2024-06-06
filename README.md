@@ -21,7 +21,7 @@ Recetas de todo el mundo, intrigantes y poco conocidas.
 
 ## 🔗 Links
 Maite Canaviri Luque - Dev FrontEnd [![portfolio](https://img.shields.io/badge/GITHUB-000?style=for-the-badge&logo=ko-fi&logoColor=white)](https://github.com/mai-cl)
-[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/)
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/maite-cl)
 
 Antonella Analis Vigliano - QA Tester [![portfolio](https://img.shields.io/badge/GITHUB-000?style=for-the-badge&logo=ko-fi&logoColor=white)](https://github.com/121189)
 [![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/antonellaanalisvigliano/)
