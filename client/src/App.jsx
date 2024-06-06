@@ -10,6 +10,8 @@ import CreateRecipeScreen from "./components/CreateRecipeScreen";
 import ProfileScreen from "./components/ProfileScreen";
 import SearchRecipesScreen from "./components/SearchRecipesScreen";
 import FeedScreen from "./components/FeedScreen";
+import LastRecipesScreen from "./components/LastRecipesScreen";
+import ExploreScreen from "./components/ExploreScreen";
 
 function App() {
   const { isLoggedIn, user } = useSelector((state) => state.user);
@@ -37,7 +39,7 @@ function App() {
           <Route path="/create-recipe" element={<CreateRecipeScreen />} />
           <Route path="/profile" element={<ProfileScreen />} />
           <Route path="/search" element={<SearchRecipesScreen />} />
-          <Route path="/feed" element={<FeedScreen />} />
+          <Route path="/*" element={<ExploreScreen />} />
         </Routes>
       </main>
     </BrowserRouter>
