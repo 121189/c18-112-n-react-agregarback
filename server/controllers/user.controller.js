@@ -109,7 +109,6 @@ module.exports.login = async (req, res) => {
       const newJWT = jwt.sign(
         {
           _id: user._id,
-          level: user.level,
         },
         secretKey,
         { expiresIn: "10y" }
