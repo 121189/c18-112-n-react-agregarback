@@ -65,7 +65,13 @@ const UserSchema = new mongoose.Schema(
           ],
           default: [],
         },
-
+        bio:{
+          type: String,
+        },
+        interests:{
+          type: [String],
+          default: [],
+        },
     }, { timestamps: true }
 );
 
