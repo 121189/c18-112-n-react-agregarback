@@ -13,6 +13,6 @@ router.put("/:id", authenticate, recipesController.updateRecipe);
 router.delete("/:id", authenticate, recipesController.deleteRecipe);
 
 /*Rutas con funcionalidades adicionales*/
-router.post("search", authenticate, recipesController.searchRecipes);
+router.post("/search/:page", recipesController.searchRecipes);
 
 module.exports = router;
