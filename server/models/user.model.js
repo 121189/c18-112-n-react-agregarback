@@ -19,16 +19,16 @@ const UserSchema = new mongoose.Schema(
               },
         },
         password: {
+          password: {
             type: String,
             required: true,
             validate: {
-                validator: (val) =>
-                  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()-=_+{};:'",.<>/?[\]`|~]).{8,}$/.test(
-                    val
-                  ),
-                message:
-                  "La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un carácter especial.",
-              },
+              validator: (val) =>
+                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-=_+{};:'",.<>/?[\]`|~]).{8,}$/.test(val),
+              message:
+                "La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un carácter especial.",
+            },
+          },
         },
         role: {
             type: String,
