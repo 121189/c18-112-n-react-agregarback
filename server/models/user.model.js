@@ -19,7 +19,7 @@ const UserSchema = new mongoose.Schema(
               },
         },
         password: {
-          password: {
+         
             type: String,
             required: true,
             validate: {
@@ -28,7 +28,7 @@ const UserSchema = new mongoose.Schema(
               message:
                 "La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un carácter especial.",
             },
-          },
+       
         },
         role: {
             type: String,
