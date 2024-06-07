@@ -30,7 +30,7 @@ module.exports.findAllRecipes = async (req, res) => {
 //find all filtered recipes with paginator, 6 recipes per page and send the total of pages and actual page size
 module.exports.searchRecipes = async (req, res) => {
     try {
-        const page = parseInt(req.query.page);
+        const page = parseInt(req.params.page);
         const limit = 6;
         const skip = (page - 1) * limit;
         const recipes = await Recipe.find().skip(skip).limit(limit).sort({ createdAt: -1 });
