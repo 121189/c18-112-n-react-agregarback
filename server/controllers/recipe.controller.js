@@ -30,11 +30,32 @@ module.exports.findAllRecipes = async (req, res) => {
 //find all filtered recipes with paginator, 6 recipes per page and send the total of pages and actual page size
 module.exports.searchRecipes = async (req, res) => {
     try {
+        const { ingredientsQty, portionsQty, maxDuration, orderBy, order } = req.body;
+        const filter = {};
+        let sort = {
+            createdAt: -1,
+        };
+        if (orderBy && order) {
+            if (orderBy === "title") {
+                sort = { title: order };
+            }
+        }
+        if (ingredientsQty) {
+            filter.ingredients = { $size: parseInt(ingredientsQty, 10) };
+        }
+
+        if (portionsQty) {
+            filter.portions = parseInt(portionsQty, 10);
+        }
+
+        if (maxDuration) {
+            filter.duration = { $lte: parseInt(maxDuration, 10) };
+        }
         const page = parseInt(req.params.page);
         const limit = 6;
         const skip = (page - 1) * limit;
-        const recipes = await Recipe.find().skip(skip).limit(limit).sort({ createdAt: -1 });
-        const total = await Recipe.countDocuments();
+        const recipes = await Recipe.find(filter).collation({locale:"en", strength:2}).skip(skip).limit(limit).sort(sort);
+        const total = await Recipe.countDocuments(filter);
         const pages = Math.ceil(total / limit);
         res.status(200);
         res.json({ recipes, pages, page });
@@ -43,8 +64,6 @@ module.exports.searchRecipes = async (req, res) => {
         res.json({ error: error });
     }
 };
-
-
 
 // Find a recipe by ID
 module.exports.findRecipe = async (req, res) => {
