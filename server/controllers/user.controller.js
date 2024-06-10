@@ -70,6 +70,23 @@ module.exports.findAllUsers = async (req, res) => {
       res.json({ error: error });
     }
   };
+// Get list of favorite recipes
+module.exports.getFavorites = async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: req.params.id });
+    if (user) {
+      res.status(200);
+      res.json(user.favorites);
+      console.log(user.favorites);
+      return;
+    }
+    res.status(404);
+    res.json({ error: "User not found" });
+  } catch (error) {
+    res.status(500);
+    res.json({ error: error });
+  }
+};
 
 //   MÉTODOS DE LOGIN
 module.exports.login = async (req, res) => {
@@ -237,5 +254,4 @@ module.exports.login = async (req, res) => {
         });
     }
   }
-  
-  
+
