@@ -27,4 +27,7 @@ app.use('/api/session', sessionRoutes);
 const recipeRoutes = require('./routes/recipe.routes');
 app.use('/api/recipe', recipeRoutes);
 
+const commentRoutes = require('./routes/comment.routes');
+app.use('/api/comment', commentRoutes);
+
 app.listen(port, () => console.log(`Listening on port: ${port}`));
