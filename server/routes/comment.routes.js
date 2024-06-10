@@ -8,5 +8,6 @@ const { authenticate } = require('../config/jwt.config');
 router.post("", authenticate, commentController.createComment);
 router.get("/:recipeId", authenticate, commentController.getCommentsByRecipeId);
 router.delete("/:id", authenticate, commentController.deleteComment);
+router.put("/:id", authenticate, commentController.updateComment);
 
 module.exports = router;
