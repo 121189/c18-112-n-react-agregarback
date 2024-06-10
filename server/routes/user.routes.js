@@ -14,6 +14,8 @@ router.get("", authenticate, userController.findAllUsers);
 router.get("/:id", authenticate, userController.findUser);
 router.put("/:id", authenticate,userController.updateUser);
 router.delete("/:id", userController.deleteUser);
+//Get list of favorite recipes
+router.get("/:id/favorites", authenticate, userController.getFavorites);
 
 
 module.exports = router;
