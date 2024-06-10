@@ -37,7 +37,7 @@ const RecipesShema = new mongoose.Schema({
         enum: ["draft", "published"],
         default: "draft",
     },
-    likes:{
+    favorites:{
         type:[
             {
                 type: mongoose.Schema.Types.ObjectId,
