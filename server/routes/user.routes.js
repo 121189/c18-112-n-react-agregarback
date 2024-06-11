@@ -16,6 +16,7 @@ router.put("/:id", authenticate,userController.updateUser);
 router.delete("/:id", userController.deleteUser);
 //Get list of favorite recipes
 router.get("/:id/favorites", authenticate, userController.getFavorites);
-
+//Followers and followed controller
+router.post("/:id/follow", authenticate, userController.follow);
 
 module.exports = router;
