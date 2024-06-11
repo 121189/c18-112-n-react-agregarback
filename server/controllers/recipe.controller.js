@@ -1,6 +1,7 @@
 const Recipe = require('../models/recipe.model');
 const mongoose = require('mongoose');
 const User = require('../models/user.model');
+const Recipes = require('../models/recipe.model');
 
 // Create a new recipe
 module.exports.createRecipe = async (req, res) => {
@@ -152,8 +153,8 @@ module.exports.addFavorite = async (req, res) => {
             res.status(404);
             return res.json({ error: "Usuario no encontrado" });
         }
-        
-        await User.updateOne({ _id: userId }, { $push: { favorites: recipe._id } });       
+
+        await User.updateOne({ _id: userId }, { $push: { favorites: recipe._id } });
         recipe.favorites.push(userId);
         await recipe.save();
         res.status(200);
@@ -161,5 +162,67 @@ module.exports.addFavorite = async (req, res) => {
     } catch (error) {
         res.status(500);
         res.json({ error: error });
+    }
+};
+
+//Get list of recipes from followed users with filters
+module.exports.getFollowingRecipes = async (req, res) => {
+    try {
+        const userId = req.body.userId; // ID del usuario logueado
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
+            res.status(400).json({ error: "ID de usuario no válido" });
+            return;
+        }
+        // Encuentra el usuario logueado
+        const user = await User.findById(userId);
+        if (!user) {
+            res.status(404).json({ error: "Usuario no encontrado" });
+            return;
+        }
+        // Verifica que la lista de seguidos exista y contenga IDs válidos
+        if (!user.following || user.following.length === 0) {
+            res.status(200).json({ recipes: [] });
+            return;
+        }
+        // Asegúrate de que los IDs en la lista de following sean ObjectId válidos
+        const followingIds = user.following.filter(id => mongoose.Types.ObjectId.isValid(id));
+        if (followingIds.length === 0) {
+            res.status(200).json({ recipes: [] });
+            return;
+        }
+        const { ingredientsQty, portionsQty, maxDuration, orderBy, order } = req.body;
+        let filter = { owner: { $in: followingIds } };
+        let sort = {
+            createdAt: -1,
+        };
+        if (orderBy && order) {
+            if (orderBy === "title") {
+                sort = { title: order };
+            }
+            if (orderBy === "duration") {
+                sort = { duration: order };
+            }
+        }
+        if (ingredientsQty) {
+            filter.ingredients = { $size: ingredientsQty };
+        }
+        
+        if (portionsQty) {
+            filter.portions = portionsQty;
+        }
+
+        if (maxDuration) {
+            filter.duration = { $lte: maxDuration };
+        }
+        const page = parseInt(req.params.page);
+        const limit = 6;
+        const skip = (page - 1) * limit;
+        // Obtener las recetas 
+        const recipes = await Recipe.find(filter).collation({ locale: "en", strength: 2 }).skip(skip).limit(limit).sort(sort);
+        const total = await Recipe.countDocuments(filter);
+        const pages = Math.ceil(total / limit);
+        res.status(200).json({recipes, page, pages });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
     }
 };
