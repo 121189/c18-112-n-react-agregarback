@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 
 export const HomeScreen = () => {
   return (
-    <section className="min-h-screen bg-gray-100">
+    <section className="bg-home-background flex min-h-screen items-center bg-gray-100 bg-cover">
       <Container>
-        <div className="mx-auto my-0 max-w-4xl pt-16">
+        <div className="mx-auto -mt-20 flex max-w-4xl flex-col items-center justify-center pt-16">
           <h1 className="mb-4 text-center text-5xl font-semibold">QueRapida</h1>
           <p className="text-center">
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fuga
@@ -21,16 +21,10 @@ export const HomeScreen = () => {
           </p>
           <div className="flex justify-center">
             <Link
-              to="/feed"
-              className="mr-4 rounded-lg bg-orange-400 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-orange-500 focus:outline-none focus:ring-4 focus:ring-orange-300"
+              to="/ultimas-recetas"
+              className="mr-4 rounded-lg bg-orange-500 px-5 py-2.5 text-center text-sm font-medium text-white transition-colors hover:bg-orange-400 focus:outline-none focus:ring-4 focus:ring-orange-300"
             >
-              Explorar
-            </Link>
-            <Link
-              to="/create-recipe"
-              className="rounded-lg bg-orange-400 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-orange-500 focus:outline-none focus:ring-4 focus:ring-orange-300"
-            >
-              Publicar
+              Explorar recetas
             </Link>
           </div>
         </div>
