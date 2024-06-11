@@ -24,7 +24,7 @@ const SearchForm = () => {
         className="peer h-full w-full pr-2 text-sm text-gray-700 outline-none"
         type="text"
         id="search"
-        placeholder="Busca una receta..."
+        placeholder="Busca una receta"
       />
     </form>
   );
