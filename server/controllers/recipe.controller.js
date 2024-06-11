@@ -32,7 +32,7 @@ module.exports.findAllRecipes = async (req, res) => {
 //find all filtered recipes with paginator, 6 recipes per page and send the total of pages and actual page size
 module.exports.searchRecipes = async (req, res) => {
     try {
-        const { ingredientsQty, portionsQty, maxDuration, orderBy, order, } = req.body;
+        const { ingredientsQty, portionsQty, maxDuration, orderBy, order } = req.body;
         let filter = {};
         let sort = {
             createdAt: -1,
@@ -56,12 +56,15 @@ module.exports.searchRecipes = async (req, res) => {
         if (maxDuration) {
             filter.duration = { $lte: maxDuration };
         }
-        const page = parseInt(req.params.page);
-        const limit = 6;
+        const page = parseInt(req.params.page || 1);
+        let limit = 6;
+        const total = await Recipe.countDocuments(filter);
+        if (!req.params.page) {
+            limit = total;
+        } 
+        const pages = Math.ceil(total / limit);
         const skip = (page - 1) * limit;
         const recipes = await Recipe.find(filter).collation({ locale: "en", strength: 2 }).skip(skip).limit(limit).sort(sort);
-        const total = await Recipe.countDocuments(filter);
-        const pages = Math.ceil(total / limit);
         res.status(200);
         res.json({ recipes, pages, page });
     } catch (error) {
@@ -206,7 +209,7 @@ module.exports.getFollowingRecipes = async (req, res) => {
         if (ingredientsQty) {
             filter.ingredients = { $size: ingredientsQty };
         }
-        
+
         if (portionsQty) {
             filter.portions = portionsQty;
         }
@@ -221,7 +224,7 @@ module.exports.getFollowingRecipes = async (req, res) => {
         const recipes = await Recipe.find(filter).collation({ locale: "en", strength: 2 }).skip(skip).limit(limit).sort(sort);
         const total = await Recipe.countDocuments(filter);
         const pages = Math.ceil(total / limit);
-        res.status(200).json({recipes, page, pages });
+        res.status(200).json({ recipes, page, pages });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
