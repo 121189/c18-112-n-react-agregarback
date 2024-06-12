@@ -14,8 +14,11 @@ router.get("", authenticate, userController.findAllUsers);
 router.get("/:id", authenticate, userController.findUser);
 router.put("/:id", authenticate,userController.updateUser);
 router.delete("/:id", userController.deleteUser);
-//Get list of favorite recipes
-router.get("/:id/favorites", authenticate, userController.getFavorites);
 
+//Followers and followed controller
+router.post("/:id/follow", authenticate, userController.follow);
+router.delete("/:id/follow", authenticate, userController.unfollow);
+//Gets a user's favorites list
+router.get("/favorites", authenticate, userController.getFavorites);
 
 module.exports = router;
