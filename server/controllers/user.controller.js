@@ -5,9 +5,9 @@ const { sendConfirmationEmail, sendPasswordToken } = require("../config/email.co
 const PasswordToken = require("../models/passwordToken.model");
 const secretKey = process.env.JWT_SECRET_KEY;
 const { generateTempToken } = require("../util/generateToken");
+const Recipe = require("../models/recipe.model");
 // Controladores básicos de CRUD
 module.exports.createUser = async (req, res) => {
-  console.log(req.body);
   try {
     const newUser = await User.create(req.body);
     res.status(200);
@@ -32,10 +32,11 @@ module.exports.findAllUsers = async (req, res) => {
 };
 module.exports.findUser = async (req, res) => {
   try {
-    const user = await User.findOne({ _id: req.params.id });
+    const user = await User.findOne({ _id: req.params.id }).populate("followers").populate("following");
+    const recipes = await Recipe.find({ owner: req.params.id });
     if (user) {
       res.status(200);
-      res.json(user);
+      res.json({ user, recipes, followersQty: user.followers.length, followingQty: user.following.length });
       return;
     }
     res.status(404);
@@ -73,7 +74,8 @@ module.exports.deleteUser = async (req, res) => {
 // Get list of favorite recipes
 module.exports.getFavorites = async (req, res) => {
   try {
-    const user = await User.findOne({ _id: req.params.id });
+    const userId = req.body.userId; // ID del usuario logueado
+    const user = await User.find({ _id: userId });
     if (user) {
       res.status(200);
       res.json(user.favorites);
@@ -308,4 +310,48 @@ module.exports.follow = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+//Unfollow a user
+module.exports.unfollow = async (req, res) => {
+  try {
+    const followerId = req.body.userId; // ID del usuario logueado
+    const followingId = req.params.id;  // ID del usuario a seguir
+    if (followerId === followingId) {
+      res.status(400).json({ error: "No puedes dejar de seguirte a ti mismo" });
+      return;
+    }
+    // Encuentra los usuarios
+    const follower = await User.findById(followerId);
+    const following = await User.findById(followingId);
+
+    if (!follower || !following) {
+      res.status(404).json({ error: "Usuario no encontrado" });
+      return;
+    }
+    // Verifica que las listas existan
+    if (!follower.following) {
+      follower.following = [];
+    }
+    if (!following.followers) {
+      following.followers = [];
+    }
+
+    // Verifica si ya está siguiendo
+    if (!follower.following.includes(followingId)) {
+      res.status(400).json({ error: "No estás siguiendo a este usuario" });
+      return;
+    }
+    // Actualiza las listas
+    await User.updateOne(
+      { _id: followerId },
+      { $pull: { following: followingId } }
+    );
+    return res.status(200).json({ message: "Dejaste de seguir a este usuario" });
+  }
+  catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+
 
