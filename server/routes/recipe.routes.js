@@ -15,6 +15,7 @@ router.delete("/:id", authenticate, recipesController.deleteRecipe);
 /*Rutas con funcionalidades adicionales*/
 router.post("/search/:page?", recipesController.searchRecipes);
 router.post("/favorite/:id", authenticate, recipesController.addFavorite);
+router.delete("/favorite/:id", authenticate, recipesController.removeFavorite);
+router.get("/favorites/user", authenticate, recipesController.getFavorites); 
 router.post("/following/:page", authenticate, recipesController.getFollowingRecipes);
-
 module.exports = router;
