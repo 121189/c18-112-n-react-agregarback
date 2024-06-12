@@ -1,8 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const SearchForm = () => {
+  const [searchInput, setSearchInput] = useState("");
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(searchInput);
+    navigate("/search?query=" + searchInput);
+  };
+
   return (
-    <form className="relative ml-10 mr-auto flex h-10 w-96 items-center overflow-hidden rounded-lg bg-white focus-within:shadow-lg">
+    <form
+      className="relative ml-10 mr-auto flex h-10 w-96 items-center overflow-hidden rounded-lg bg-white focus-within:shadow-lg"
+      onSubmit={handleSubmit}
+    >
       <div className="grid h-full w-12 place-items-center text-gray-300">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -25,6 +38,8 @@ const SearchForm = () => {
         type="text"
         id="search"
         placeholder="Busca una receta"
+        value={searchInput}
+        onChange={(e) => setSearchInput(e.target.value)}
       />
     </form>
   );
