@@ -32,7 +32,7 @@ module.exports.findAllRecipes = async (req, res) => {
 //find all filtered recipes with paginator, 6 recipes per page and send the total of pages and actual page size
 module.exports.searchRecipes = async (req, res) => {
     try {
-        const { ingredientsQty, portionsQty, maxDuration, orderBy, order } = req.body;
+        const { ingredientsQty, portionsQty, maxDuration, orderBy, order, keyword } = req.body;
         let filter = {};
         let sort = {
             createdAt: -1,
@@ -55,6 +55,9 @@ module.exports.searchRecipes = async (req, res) => {
 
         if (maxDuration) {
             filter.duration = { $lte: maxDuration };
+        }
+        if(keyword){
+            filter.title = { $regex: keyword, $options: "i" };
         }
         const page = parseInt(req.params.page || 1);
         let limit = 6;
