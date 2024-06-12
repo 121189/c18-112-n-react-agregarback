@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import img1 from "../assets/1.jpg";
+import { Link } from "react-router-dom";
 
 const Card = () => {
   const [isLiked, setIsLiked] = useState(false);
@@ -38,9 +39,11 @@ const Card = () => {
         </div>
       </div>
       <div className="p-4">
-        <h3 className="mb-2 text-xl font-semibold text-gray-950">
-          Lorem ipsum
-        </h3>
+        <Link to="/recipe/12345678">
+          <h3 className="mb-2 text-xl font-semibold text-gray-950">
+            Lorem ipsum
+          </h3>
+        </Link>
         <p className="mb-2 text-sm text-gray-700">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum nulla
           commodi labore.
