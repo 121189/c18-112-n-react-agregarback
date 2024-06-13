@@ -79,7 +79,7 @@ module.exports.searchRecipes = async (req, res) => {
 // Find a recipe by ID
 module.exports.findRecipe = async (req, res) => {
     try {
-        const recipe = await Recipe.findOne({ _id: req.params.id });
+        const recipe = await Recipe.findOne({ _id: req.params.id }).populate("owner");
         if (recipe) {
             res.status(200);
             res.json(recipe);
