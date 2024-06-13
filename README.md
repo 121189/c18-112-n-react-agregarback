@@ -2,9 +2,9 @@
 
 # QUERAPIDA project
 
-Descripción:
+QUERAPIDA es una innovadora red social de cocina diseñada para entusiastas culinarios de todos los niveles. 
 
-QUERAPIDA es una innovadora red social de cocina diseñada para entusiastas culinarios de todos los niveles. En QUERAPIDA, los usuarios pueden buscar, compartir, guardar, calificar y comentar recetas, además de seguir a otros usuarios para inspirarse mutuamente. La plataforma fomenta la creatividad en la cocina con herramientas avanzadas de búsqueda, contenido multimedia enriquecido y análisis nutricional detallado para cada receta.
+En QUERAPIDA, los usuarios pueden buscar, compartir, guardar, calificar y comentar recetas, además de seguir a otros usuarios para inspirarse mutuamente. La plataforma fomenta la creatividad en la cocina con herramientas avanzadas de búsqueda, contenido multimedia enriquecido y análisis nutricional detallado para cada receta.
 Con QUERAPIDA, descubrirás recetas fáciles de realizar con ingredientes que probablemente ya tienes en tu despensa. Ideal para quienes buscan cocinar en poco tiempo sin sacrificar el sabor ni la nutrición. 
 Recetas de todo el mundo, intrigantes y poco conocidas.
 
