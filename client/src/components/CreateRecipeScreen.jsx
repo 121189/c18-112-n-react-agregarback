@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Container from "./Container";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { InputError } from "./InputError";
 import DynamicInputs from "./DynamicInputs";
 import { useInputList } from "../hooks/useInputList";
+import { fileUpload } from "@/utils/fileUpload";
+import Axios from "axios";
 
 const CreateRecipeScreen = () => {
   const {
@@ -15,7 +17,10 @@ const CreateRecipeScreen = () => {
   } = useForm();
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const {
+    user: { id: userId },
+  } = useSelector((state) => state.user);
+  const file = useRef(null);
 
   const {
     items: ingredients,
@@ -35,12 +40,52 @@ const CreateRecipeScreen = () => {
     checkErrors: checkStepsError,
   } = useInputList([], { minLength: 2 });
 
-  const onSaveRecipe = (data) => {
+  const onSaveRecipe = async (data) => {
     checkIngredientsError();
     checkStepsError();
     if (ingredientsError) return;
     if (stepsError) return;
-    console.log({ ...data, ingredients, steps });
+
+    try {
+      setIsLoading(true);
+      const imgUrl = await fileUpload(file.current);
+      console.log({
+        ...data,
+        ingredients,
+        steps,
+        coverImage: imgUrl,
+        sliderImages: [imgUrl],
+      });
+
+      //POST recipe
+      const response = await Axios.post(
+        `/recipe`,
+        {
+          ...data,
+          ingredients: ingredients.map((ing) => ing.value),
+          steps: steps.map((step) => step.value),
+          coverImage: imgUrl,
+          sliderImages: [imgUrl],
+        },
+        {
+          withCredentials: true,
+        },
+      );
+
+      console.log(response.data);
+      const { _id: recipeId, status } = response.data;
+      setIsLoading(false);
+      status === "published"
+        ? navigate(`/recipe/${recipeId}`)
+        : navigate(`/profile/${userId}`);
+    } catch (error) {
+      setIsLoading(false);
+      console.log(error.message);
+    }
+  };
+
+  const handleChangeFile = (e) => {
+    file.current = e.target.files[0];
   };
 
   return (
@@ -64,6 +109,7 @@ const CreateRecipeScreen = () => {
                   required: true,
                 })}
                 id="title"
+                name="title"
                 type="text"
                 className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 sm:text-sm"
                 placeholder="Introduce el título de la receta"
@@ -80,6 +126,7 @@ const CreateRecipeScreen = () => {
                 Estado
               </label>
               <select
+                {...register("status", { required: true })}
                 name="status"
                 id="status"
                 className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 sm:text-sm"
@@ -87,8 +134,12 @@ const CreateRecipeScreen = () => {
                 <option value="published">Publicado</option>
                 <option value="draft">Borrador</option>
               </select>
+              {errors.status?.type === "required" && (
+                <InputError message="El campo estado es requerido" />
+              )}
             </div>
           </div>
+
           <div>
             <label
               htmlFor="coverImage"
@@ -101,7 +152,9 @@ const CreateRecipeScreen = () => {
                 required: true,
               })}
               id="coverImage"
-              type="text"
+              type="file"
+              name="coverImage"
+              onChange={handleChangeFile}
               className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 sm:text-sm"
               placeholder="Introduce la URL de la imágen"
             />
@@ -109,6 +162,7 @@ const CreateRecipeScreen = () => {
               <InputError message="El campo imágen es requerido" />
             )}
           </div>
+
           <div>
             <label
               htmlFor="description"
@@ -122,6 +176,7 @@ const CreateRecipeScreen = () => {
               })}
               type="text"
               id="description"
+              name="description"
               className="block h-auto w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 sm:text-sm"
               placeholder="Introduce una descripción"
               rows={4}
@@ -130,32 +185,34 @@ const CreateRecipeScreen = () => {
               <InputError message="El campo descripción es requerido" />
             )}
           </div>
+
           <div className="grid grid-cols-2 gap-8">
             <div>
               <label
-                htmlFor="time"
+                htmlFor="duration"
                 className="mb-2 block text-sm font-medium text-gray-900"
               >
-                Tiempo
+                Duración
               </label>
               <input
-                {...register("time", {
+                {...register("duration", {
                   required: true,
                   max: 60,
                   min: 1,
                 })}
-                id="time"
+                id="duration"
+                name="duration"
                 type="number"
                 className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 sm:text-sm"
                 placeholder="Introduce el tiempo de preparación en minutos"
               />
-              {errors.time?.type === "required" && (
-                <InputError message="El campo tiempo es requerido" />
+              {errors.duration?.type === "required" && (
+                <InputError message="El campo duración es requerido" />
               )}
-              {errors.time?.type === "max" && (
+              {errors.duration?.type === "max" && (
                 <InputError message="El valor debe ser menor o igual a 60" />
               )}
-              {errors.time?.type === "min" && (
+              {errors.duration?.type === "min" && (
                 <InputError message="El valor debe ser superior o igual a 1" />
               )}
             </div>
@@ -188,6 +245,7 @@ const CreateRecipeScreen = () => {
               )}
             </div>
           </div>
+
           <div>
             <DynamicInputs
               title="Ingredientes"

@@ -1,11 +1,14 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "../redux/slices/userSlice";
 import { closeUserOptions } from "../redux/slices/uiSlice";
 
 const UserOptions = ({ isOpen, name, email }) => {
   const dispatch = useDispatch();
+  const {
+    user: { id },
+  } = useSelector((state) => state.user);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -19,7 +22,7 @@ const UserOptions = ({ isOpen, name, email }) => {
           <p className="mb-1 px-3 font-semibold">{name}</p>
           <p className="px-3">{email}</p>
         </div>
-        <Link to="/profile" className="px-3 py-2 hover:bg-orange-400">
+        <Link to={`/profile/${id}`} className="px-3 py-2 hover:bg-orange-400">
           Perfil
         </Link>
         <button
