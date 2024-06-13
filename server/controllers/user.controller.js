@@ -59,7 +59,7 @@ module.exports.findUser = async (req, res) => {
       const pages = Math.ceil(total / limit)
 
       res.status(200);
-      res.json({ user, recipes, page, pages, followersQty: user.followers.length, followingQty: user.following.length, isFollowing });
+      res.json({ user, total, ok: true, recipes, page, pages, followersQty: user.followers.length, followingQty: user.following.length, isFollowing });
       return;
     }
     res.status(404);
