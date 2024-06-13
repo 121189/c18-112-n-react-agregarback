@@ -34,15 +34,32 @@ module.exports.findUser = async (req, res) => {
   const userId = req.body.userId; // ID del usuario logueado
   try {
     const user = await User.findOne({ _id: req.params.id }).populate("followers").populate("following");
-    const recipes = await Recipe.find({ owner: req.params.id });
+    let filter = { owner: req.params.id }
+    let sort = {
+      createdAt: -1,
+    }
+    const page = parseInt(req.params.page || 1)
+    let limit = 6
+    const total = await Recipe.countDocuments(filter)
+    if (!req.params.page) {
+      limit = total
+    }
+    const pages = Math.ceil(total / limit)
+    const skip = (page - 1) * limit
+    const recipes = await Recipe.find(filter)
+      .skip(skip)
+      .limit(limit)
+      .sort(sort);
 
 
     if (user) {
 
       const isFollowing = user.followers.some(follower => follower._id.toString() === userId);
+      const total = await Recipe.countDocuments(filter)
+      const pages = Math.ceil(total / limit)
 
       res.status(200);
-      res.json({ user, recipes, followersQty: user.followers.length, followingQty: user.following.length, isFollowing });
+      res.json({ user, recipes, page, pages, followersQty: user.followers.length, followingQty: user.following.length, isFollowing });
       return;
     }
     res.status(404);
@@ -310,9 +327,9 @@ module.exports.follow = async (req, res) => {
       { _id: followingId },
       { $push: { followers: followerId } }
     );
-    
 
-    res.status(200).json({ message: "Siguiendo con éxito", ok: true});
+
+    res.status(200).json({ message: "Siguiendo con éxito", ok: true });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
