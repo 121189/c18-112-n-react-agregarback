@@ -157,7 +157,7 @@ module.exports.addFavorite = async (req, res) => {
     recipe.favorites.push(userId)
     await recipe.save()
     res.status(200)
-    res.json({recipe, message: "Receta añadida a favoritos", ok:true})
+    res.json({recipe, message: "Receta añadida a favoritos", ok:true, userId: userId})
   } catch (error) {
     res.status(500)
     res.json({ error: error })
@@ -188,7 +188,7 @@ module.exports.removeFavorite = async (req, res) => {
     recipe.favorites = recipe.favorites.filter(fav => fav.toString() !== userId)
     await recipe.save()
     res.status(200)
-    res.json(recipe)
+    res.json({recipe, message: "Receta eliminada de favoritos", ok:true, userId: userId})
   } catch (error) {
     res.status(500)
     res.json({ error: error })
