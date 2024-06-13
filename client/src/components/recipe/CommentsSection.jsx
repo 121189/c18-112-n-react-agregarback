@@ -1,7 +1,35 @@
 import React from "react";
 import CommentsList from "./CommentsList";
+import { useForm } from "react-hook-form";
+import { InputError } from "../InputError";
+import Axios from "axios";
 
-const CommentsSection = ({ comments }) => {
+const CommentsSection = ({ comments, recipeId, fetchRecipe }) => {
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
+
+  const onSubmitComment = async (data) => {
+    try {
+      const response = await Axios.post(
+        `/comment`,
+        {
+          content: data.comment,
+          recipe: recipeId,
+        },
+        {
+          withCredentials: true,
+        },
+      );
+
+      fetchRecipe();
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   return (
     <div className="min-h-14 rounded-md bg-white p-6 shadow-md">
       <h2 className="mb-4 flex items-center gap-2">
@@ -25,20 +53,19 @@ const CommentsSection = ({ comments }) => {
           Comentarios
         </span>
       </h2>
-      <form action="" className="mb-8">
+      <form action="" className="mb-8" onSubmit={handleSubmit(onSubmitComment)}>
         <div className="relative">
           <input
-            /* {...register("coverImage", {
-                required: true,
-              })} */
-            id="coverImage"
+            {...register("comment", {
+              required: true,
+            })}
+            id="comment"
+            name="comment"
             type="text"
             className="peer block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 outline-orange-500 sm:text-sm"
             placeholder="Escribe un comentario"
           />
-          {/* {errors.coverImage?.type === "required" && (
-              <InputError message="El campo imágen es requerido" />
-            )} */}
+
           <button
             type="submit"
             className="absolute right-0 top-1/2 text-gray-400 peer-focus:text-orange-500"
@@ -61,6 +88,9 @@ const CommentsSection = ({ comments }) => {
             </svg>
           </button>
         </div>
+        {errors.comment?.type === "required" && (
+          <InputError message="El campo comentario es requerido" />
+        )}
       </form>
       <CommentsList comments={comments} />
     </div>

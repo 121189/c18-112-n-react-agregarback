@@ -3,8 +3,8 @@ import React from "react";
 const CommentsList = ({ comments }) => {
   return (
     <ul className="flex flex-col gap-9">
-      {comments.map((comment, index) => (
-        <li key={index} className="space-y-2">
+      {comments.map((comment) => (
+        <li key={comment._id} className="space-y-2">
           <div className="flex items-center gap-2">
             <svg
               className="h-12 w-12 text-gray-500"
@@ -24,7 +24,9 @@ const CommentsList = ({ comments }) => {
             </svg>
             <div>
               <h4 className="text-lg font-semibold">{comment.owner.name}</h4>
-              <div className="text-sm text-gray-600">{comment.date}</div>
+              <div className="text-sm text-gray-600">
+                {new Date(comment.createdAt).toLocaleDateString("en-GB")}
+              </div>
             </div>
           </div>
           <p className="text-lg text-gray-700">{comment.content}</p>

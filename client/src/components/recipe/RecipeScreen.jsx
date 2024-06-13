@@ -55,25 +55,37 @@ const RecipeScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [recipe, setRecipe] = useState(null);
+  const [comments, setComments] = useState([]);
   const { id } = useParams();
 
   useEffect(() => {
-    async function fetchRecipe() {
-      setIsLoading(true);
-      try {
-        const response = await Axios.get(`/recipe/${id}`, {
-          withCredentials: true,
-        });
-
-        setRecipe(response.data);
-        setIsLoading(false);
-      } catch (error) {
-        setIsLoading(false);
-        console.log(error.message);
-      }
-    }
     fetchRecipe();
   }, []);
+
+  const fetchRecipe = async () => {
+    setIsLoading(true);
+    try {
+      const response = await Axios.get(`/recipe/${id}`, {
+        withCredentials: true,
+      });
+
+      setRecipe(response.data);
+
+      const responseComments = await Axios.get(`/comment/${id}`, {
+        withCredentials: true,
+      });
+
+      setComments(responseComments.data);
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      console.log(error.message);
+    }
+  };
+
+  const addComment = (newComment) => {
+    setComments((prev) => [...prev, newComment]);
+  };
 
   return (
     <article className="min-h-screen bg-gray-100">
@@ -94,7 +106,11 @@ const RecipeScreen = () => {
               portions={recipe.portions}
             />
             <StepsSection steps={recipe.steps} />
-            <CommentsSection comments={comments} />
+            <CommentsSection
+              comments={comments}
+              recipeId={recipe._id}
+              fetchRecipe={fetchRecipe}
+            />
           </>
         )}
       </Container>

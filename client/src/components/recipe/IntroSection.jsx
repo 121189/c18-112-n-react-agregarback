@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const IntroSection = ({ title, description, coverImage, duration, owner }) => {
+  const handleAddFavorite = () => {};
+
   return (
     <div className="min-h-14 overflow-hidden rounded-md bg-white shadow-md">
       <div className="relative h-96">
@@ -29,7 +31,10 @@ const IntroSection = ({ title, description, coverImage, duration, owner }) => {
           </svg>
           <span className="text-lg font-semibold">{duration} minutos</span>
         </div>
-        <div className="absolute right-8 top-full flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white text-gray-500 shadow-md">
+        <div
+          onClick={handleAddFavorite}
+          className="absolute right-8 top-full flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white text-gray-500 shadow-md"
+        >
           <svg
             className="h-6 w-6"
             data-slot="icon"
