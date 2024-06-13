@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-
-import img1 from "../assets/1.jpg";
 import { Link } from "react-router-dom";
 
 const Card = ({ _id, title, description, coverImage, owner }) => {
