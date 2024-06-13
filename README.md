@@ -85,3 +85,7 @@ Informe de Software
 
 Test Plan
 
+Test Cases
+
+Informe de Errores
+
