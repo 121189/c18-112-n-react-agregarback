@@ -13,8 +13,8 @@ const ProfileScreen = () => {
   const [showFollow, setShowFollow] = useState(false);
   const [recipeErrors, setRecipesErrors] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [pages, setPages] = useState(0);
-
+  const [totalPages, setTotalPages] = useState(1);
+  const [recipeTotal, setRecipeTotal] = useState(0);
   const handleUserById = async (id) => {
     try {
       const response = await findUser(id, currentPage);
@@ -22,9 +22,10 @@ const ProfileScreen = () => {
       setFollowers(response.followersQty);
       setFollowing(response.followingQty);
       setRecipes(response.recipes);
-      setPages(response.pages);
       setShowFollow(!response.isFollowing);
-
+      setCurrentPage(response.page);
+      setTotalPages(response.pages);
+      setRecipeTotal(response.total);
       if(recipes.length === 0) {
         setRecipesErrors("No hay recetas")
       }
@@ -35,15 +36,17 @@ const ProfileScreen = () => {
 
   useEffect(() => {
       if (id) {
-        handleUserById(id);
+        handleUserById(id, currentPage);
       }
-    },[]);
+    },[id,currentPage]);
+    
 
   const handleFollow = async (id) => {
     try {
       const response = await followUser(id);
       if (response.ok) {
         setShowFollow(true);
+        console.log(showFollow);
         handleUserById(id);
       }
     } catch (error) {}
@@ -54,6 +57,7 @@ const ProfileScreen = () => {
       const response = await unfollowUser(id);
       if (response.ok) {
         setShowFollow(false);
+        console.log(showFollow);
         handleUserById(id);
       }
     } catch (error) {}
@@ -93,7 +97,7 @@ const ProfileScreen = () => {
       </div>
       <div id="recipes" className="mt-4 p-6 ring-1 ring-inset ring-black">
         <h1 className="mb-4 text-2xl font-semibold">
-          Recetas ({recipes.length})
+          Recetas ({recipeTotal})
         </h1>
         <RecipesGrid
           recipes={recipes}
@@ -101,7 +105,7 @@ const ProfileScreen = () => {
           owner={user}
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
-          pages={pages}
+          pages={totalPages}
         />
       </div>
     </div>
