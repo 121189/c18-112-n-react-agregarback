@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import Card from "./Card";
 import PaginationNav from "./PaginationNav";
 
@@ -10,6 +10,7 @@ const RecipesGrid = ({
   setCurrentPage,
   pages,
 }) => {
+  const [newRecipe, setNewRecipe] = useState({});
   return recipes ? (
     <Fragment>
     <div className="flex flex-col">
@@ -22,7 +23,9 @@ const RecipesGrid = ({
               description={recipe.description}
               coverImage={recipe.coverImage}
               owner={owner.name}
-              id={recipe._id}
+              _id={recipe._id}
+              recipe={newRecipe}
+              setNewRecipe={setNewRecipe}
             />
           );
         })}
