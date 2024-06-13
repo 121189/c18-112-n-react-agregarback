@@ -42,3 +42,17 @@ export function unfollowUser(id) {
         }
     });
 }
+
+//Funcion para agregar a favoritos una receta
+export function addFavorite(id) {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const response = await axios.post(`http://localhost:8000/api/recipe/${id}/favorite`, {}, { withCredentials: true });
+            const result = await response.data;
+            resolve(result);
+        } catch (error) {
+            console.log(error);
+            reject(error);
+        }
+    });
+}
