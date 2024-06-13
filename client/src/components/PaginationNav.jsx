@@ -1,35 +1,60 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination";
+} from "@/components/ui/pagination"; // Asegúrate de que la ruta es correcta
 
 const PaginationNav = ({ currentPage, pages, setCurrentPage }) => {
-  const [pageItems, setPageItems] = useState([]);
-  for (let index = 0; index < pages; index++) {
-    if (index + 1 === currentPage - 1) {
-      <PaginationItem key={index}>
-        <PaginationPrevious href="#" onClick={setCurrentPage(index + 1)} />
-      </PaginationItem>;
-    } else {
+  const createPageItems = () => {
+    const pageItems = [];
+    for (let index = 1; index <= pages; index++) {
       pageItems.push(
-        <PaginationItem key={index}>
-          <PaginationLink href="#" onClick={setCurrentPage(index + 1)}>
-            {index + 1}
+        <PaginationItem key={index} active={index === currentPage}>
+          <PaginationLink
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              setCurrentPage(index);
+            }}
+          >
+            {index}
           </PaginationLink>
-        </PaginationItem>,
+        </PaginationItem>
       );
     }
-  }
+    return pageItems;
+  };
+
   return (
     <Pagination>
       <PaginationContent>
-        {pageItems}
+        {currentPage > 1 && (
+          <PaginationPrevious
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              setCurrentPage(currentPage - 1);
+            }}
+          >
+            Previous
+          </PaginationPrevious>
+        )}
+        {createPageItems()}
+        {currentPage < pages && (
+          <PaginationNext
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              setCurrentPage(currentPage + 1);
+            }}
+          >
+            Next
+          </PaginationNext>
+        )}
       </PaginationContent>
     </Pagination>
   );
