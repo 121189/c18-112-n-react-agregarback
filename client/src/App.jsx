@@ -12,6 +12,7 @@ import ProfileScreen from "./components/ProfileScreen";
 import SearchRecipesScreen from "./components/SearchRecipesScreen";
 import ExploreScreen from "./components/ExploreScreen";
 import RecipeScreen from "./components/recipe/RecipeScreen";
+import { UserProvider } from "./context/UserContext";
 
 function App() {
   const { isLoggedIn, user } = useSelector((state) => state.user);
@@ -40,16 +41,18 @@ function App() {
     <BrowserRouter>
       <Navbar />
       <main>
+          <UserProvider>
         <Routes>
           <Route path="/" element={<HomeScreen />} />
           <Route path="/login" element={<LoginScreen />} />
           <Route path="/sign-up" element={<SignUpScreen />} />
           <Route path="/create-recipe" element={<CreateRecipeScreen />} />
-          <Route path="/profile" element={<ProfileScreen />} />
+          <Route path="/profile/66668f077263c9ca88c244af" element={<ProfileScreen />} />
           <Route path="/search" element={<SearchRecipesScreen />} />
           <Route path="/recipe/:id" element={<RecipeScreen />} />
           <Route path="/*" element={<ExploreScreen />} />
         </Routes>
+        </UserProvider>
       </main>
     </BrowserRouter>
   );
