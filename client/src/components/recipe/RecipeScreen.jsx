@@ -56,20 +56,15 @@ const RecipeScreen = () => {
   const [isError, setIsError] = useState(false);
   const [recipe, setRecipe] = useState(null);
   const { id } = useParams();
-  const {
-    user: { token },
-  } = useSelector((state) => state.user);
 
   useEffect(() => {
     async function fetchRecipe() {
       setIsLoading(true);
       try {
-        console.log(token);
         const response = await Axios.get(`/recipe/${id}`, {
           withCredentials: true,
         });
 
-        console.log(response.data);
         setRecipe(response.data);
         setIsLoading(false);
       } catch (error) {
@@ -83,10 +78,25 @@ const RecipeScreen = () => {
   return (
     <article className="min-h-screen bg-gray-100">
       <Container classes="space-y-6">
-        <IntroSection />
-        <IngredientsSection ingredients={ingredients} />
-        <StepsSection steps={steps} />
-        <CommentsSection comments={comments} />
+        {isLoading ? (
+          "Loading..."
+        ) : (
+          <>
+            <IntroSection
+              title={recipe.title}
+              description={recipe.description}
+              coverImage={recipe.coverImage}
+              duration={recipe.duration}
+              owner={recipe.owner}
+            />
+            <IngredientsSection
+              ingredients={recipe.ingredients}
+              portions={recipe.portions}
+            />
+            <StepsSection steps={recipe.steps} />
+            <CommentsSection comments={comments} />
+          </>
+        )}
       </Container>
     </article>
   );
