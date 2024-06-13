@@ -1,8 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import Axios from "axios";
 
-const IntroSection = ({ title, description, coverImage, duration, owner }) => {
-  const handleAddFavorite = () => {};
+const IntroSection = ({
+  title,
+  description,
+  coverImage,
+  duration,
+  owner,
+  recipeId,
+  liked,
+  fetchRecipe,
+}) => {
+  const handleAddFavorite = async () => {
+    console.log("click corazon");
+    try {
+      const response = await Axios.post(
+        `/recipe/favorite/${recipeId}`,
+        {},
+        {
+          withCredentials: true,
+        },
+      );
+
+      console.log(response.data);
+      fetchRecipe();
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const handleDeleteFavorite = async () => {
+    console.log("click corazon");
+    try {
+      const response = await Axios.delete(`/recipe/favorite/${recipeId}`, {
+        withCredentials: true,
+      });
+
+      console.log(response.data);
+      fetchRecipe();
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   return (
     <div className="min-h-14 overflow-hidden rounded-md bg-white shadow-md">
@@ -32,11 +72,11 @@ const IntroSection = ({ title, description, coverImage, duration, owner }) => {
           <span className="text-lg font-semibold">{duration} minutos</span>
         </div>
         <div
-          onClick={handleAddFavorite}
+          onClick={liked ? handleDeleteFavorite : handleAddFavorite}
           className="absolute right-8 top-full flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white text-gray-500 shadow-md"
         >
           <svg
-            className="h-6 w-6"
+            className={liked ? "h-6 w-6 fill-red-500 text-red-500" : "h-6 w-6"}
             data-slot="icon"
             fill="none"
             strokeWidth="1.5"

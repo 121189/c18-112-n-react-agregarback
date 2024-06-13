@@ -5,6 +5,7 @@ const initialState = {
   /* isLoggedIn: Boolean(localStorage.getItem("queRapidaToken")), */
   isLoggedIn: Boolean(Cookies.get("userToken")),
   user: {
+    id: localStorage.getItem("queRapidaId"),
     name: localStorage.getItem("queRapidaName"),
     email: localStorage.getItem("queRapidaEmail"),
     /* token: localStorage.getItem("queRapidaToken"), */
@@ -18,6 +19,7 @@ export const userSlice = createSlice({
   reducers: {
     login: (state, action) => {
       const { user, accessToken } = action.payload;
+      state.user.id = user._id;
       state.user.name = user.name;
       state.user.email = user.email;
       state.user.token = accessToken;

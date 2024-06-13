@@ -20,6 +20,7 @@ function App() {
 
   useEffect(() => {
     if (isLoggedIn) {
+      localStorage.setItem("queRapidaId", user.id);
       localStorage.setItem("queRapidaName", user.name);
       localStorage.setItem("queRapidaEmail", user.email);
       /* localStorage.setItem("queRapidaToken", user.token); */
@@ -28,6 +29,7 @@ function App() {
         path: "/",
       });
     } else {
+      localStorage.removeItem("queRapidaId");
       localStorage.removeItem("queRapidaName");
       localStorage.removeItem("queRapidaEmail");
       /* localStorage.removeItem("queRapidaToken"); */
@@ -41,17 +43,20 @@ function App() {
     <BrowserRouter>
       <Navbar />
       <main>
-          <UserProvider>
-        <Routes>
-          <Route path="/" element={<HomeScreen />} />
-          <Route path="/login" element={<LoginScreen />} />
-          <Route path="/sign-up" element={<SignUpScreen />} />
-          <Route path="/create-recipe" element={<CreateRecipeScreen />} />
-          <Route path="/profile/66668f077263c9ca88c244af" element={<ProfileScreen />} />
-          <Route path="/search" element={<SearchRecipesScreen />} />
-          <Route path="/recipe/:id" element={<RecipeScreen />} />
-          <Route path="/*" element={<ExploreScreen />} />
-        </Routes>
+        <UserProvider>
+          <Routes>
+            <Route path="/" element={<HomeScreen />} />
+            <Route path="/login" element={<LoginScreen />} />
+            <Route path="/sign-up" element={<SignUpScreen />} />
+            <Route path="/create-recipe" element={<CreateRecipeScreen />} />
+            <Route
+              path="/profile/66668f077263c9ca88c244af"
+              element={<ProfileScreen />}
+            />
+            <Route path="/search" element={<SearchRecipesScreen />} />
+            <Route path="/recipe/:id" element={<RecipeScreen />} />
+            <Route path="/*" element={<ExploreScreen />} />
+          </Routes>
         </UserProvider>
       </main>
     </BrowserRouter>

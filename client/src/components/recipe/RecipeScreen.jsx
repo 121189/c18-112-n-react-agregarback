@@ -57,6 +57,9 @@ const RecipeScreen = () => {
   const [recipe, setRecipe] = useState(null);
   const [comments, setComments] = useState([]);
   const { id } = useParams();
+  const {
+    user: { id: userId },
+  } = useSelector((state) => state.user);
 
   useEffect(() => {
     fetchRecipe();
@@ -95,11 +98,14 @@ const RecipeScreen = () => {
         ) : (
           <>
             <IntroSection
+              recipeId={recipe._id}
               title={recipe.title}
               description={recipe.description}
               coverImage={recipe.coverImage}
               duration={recipe.duration}
               owner={recipe.owner}
+              liked={recipe.favorites.includes(userId)}
+              fetchRecipe={fetchRecipe}
             />
             <IngredientsSection
               ingredients={recipe.ingredients}
