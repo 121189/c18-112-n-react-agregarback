@@ -11,9 +11,10 @@ router.patch("/passwordReset", userController.passwordReset);
 /* Rutas Basicas del CRUD */
 router.post("", userController.createUser);
 router.get("", authenticate, userController.findAllUsers);
+//autenticate
 router.get("/:id", authenticate, userController.findUser);
-router.put("/:id", authenticate,userController.updateUser);
-router.delete("/:id", userController.deleteUser);
+router.put("/:id", authenticate, userController.updateUser);
+router.delete("/:id", authenticate, userController.deleteUser);
 
 //Followers and followed controller
 router.post("/:id/follow", authenticate, userController.follow);

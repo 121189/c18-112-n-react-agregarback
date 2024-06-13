@@ -31,12 +31,18 @@ module.exports.findAllUsers = async (req, res) => {
   }
 };
 module.exports.findUser = async (req, res) => {
+  const userId = req.body.userId; // ID del usuario logueado
   try {
     const user = await User.findOne({ _id: req.params.id }).populate("followers").populate("following");
     const recipes = await Recipe.find({ owner: req.params.id });
+
+
     if (user) {
+
+      const isFollowing = user.followers.some(follower => follower._id.toString() === userId);
+
       res.status(200);
-      res.json({ user, recipes, followersQty: user.followers.length, followingQty: user.following.length });
+      res.json({ user, recipes, followersQty: user.followers.length, followingQty: user.following.length, isFollowing });
       return;
     }
     res.status(404);
@@ -304,8 +310,9 @@ module.exports.follow = async (req, res) => {
       { _id: followingId },
       { $push: { followers: followerId } }
     );
+    
 
-    res.status(200).json({ message: "Siguiendo con éxito" });
+    res.status(200).json({ message: "Siguiendo con éxito", ok: true});
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -346,7 +353,11 @@ module.exports.unfollow = async (req, res) => {
       { _id: followerId },
       { $pull: { following: followingId } }
     );
-    return res.status(200).json({ message: "Dejaste de seguir a este usuario" });
+    await User.updateOne(
+      { _id: followingId },
+      { $pull: { followers: followerId } }
+    );
+    return res.status(200).json({ message: "Dejaste de seguir a este usuario", ok: true });
   }
   catch (error) {
     res.status(500).json({ error: error.message });

@@ -49,10 +49,7 @@ function App() {
             <Route path="/login" element={<LoginScreen />} />
             <Route path="/sign-up" element={<SignUpScreen />} />
             <Route path="/create-recipe" element={<CreateRecipeScreen />} />
-            <Route
-              path="/profile/66668f077263c9ca88c244af"
-              element={<ProfileScreen />}
-            />
+            <Route path="/profile/:id" element={<ProfileScreen />} />
             <Route path="/search" element={<SearchRecipesScreen />} />
             <Route path="/recipe/:id" element={<RecipeScreen />} />
             <Route path="/*" element={<ExploreScreen />} />
