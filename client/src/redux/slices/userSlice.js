@@ -1,11 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
+import Cookies from "js-cookie";
 
 const initialState = {
-  isLoggedIn: Boolean(localStorage.getItem("queRapidaToken")),
+  /* isLoggedIn: Boolean(localStorage.getItem("queRapidaToken")), */
+  isLoggedIn: Boolean(Cookies.get("userToken")),
   user: {
     name: localStorage.getItem("queRapidaName"),
     email: localStorage.getItem("queRapidaEmail"),
-    token: localStorage.getItem("queRapidaToken"),
+    /* token: localStorage.getItem("queRapidaToken"), */
+    token: Cookies.get("userToken"),
   },
 };
 

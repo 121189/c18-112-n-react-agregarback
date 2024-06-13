@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useCookies } from "react-cookie";
 
 import { LoginScreen } from "./components/LoginScreen";
 import { SignUpScreen } from "./components/SignUpScreen";
@@ -14,16 +15,24 @@ import RecipeScreen from "./components/recipe/RecipeScreen";
 
 function App() {
   const { isLoggedIn, user } = useSelector((state) => state.user);
+  const [cookies, setCookie, removeCookie] = useCookies();
 
   useEffect(() => {
     if (isLoggedIn) {
       localStorage.setItem("queRapidaName", user.name);
       localStorage.setItem("queRapidaEmail", user.email);
-      localStorage.setItem("queRapidaToken", user.token);
+      /* localStorage.setItem("queRapidaToken", user.token); */
+      /* document.cookie = "userToken=" + user.token; */
+      setCookie("userToken", user.token, {
+        path: "/",
+      });
     } else {
       localStorage.removeItem("queRapidaName");
       localStorage.removeItem("queRapidaEmail");
-      localStorage.removeItem("queRapidaToken");
+      /* localStorage.removeItem("queRapidaToken"); */
+      removeCookie("userToken", {
+        path: "/",
+      });
     }
   }, [isLoggedIn]);
 

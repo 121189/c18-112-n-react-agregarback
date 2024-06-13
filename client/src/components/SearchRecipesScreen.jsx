@@ -4,6 +4,7 @@ import Container from "./Container";
 import Filters from "./Filters";
 import { useSearchParams } from "react-router-dom";
 import Axios from "axios";
+import PaginationNav from "./PaginationNav";
 
 const SearchRecipesScreen = () => {
   const [isFilterVisible, setIsFilterVisible] = useState(false);
@@ -12,12 +13,13 @@ const SearchRecipesScreen = () => {
   const [searchParams] = useSearchParams();
   const [recipes, setRecipes] = useState([]);
   const query = searchParams.get("query");
+  const page = searchParams.get("page") || "";
 
   useEffect(() => {
     async function fetchRecipes() {
       setIsLoading(true);
       try {
-        const response = await Axios.post("/recipe/search", {
+        const response = await Axios.post(`/recipe/search/${page}`, {
           keywords: query,
         });
 
@@ -30,7 +32,7 @@ const SearchRecipesScreen = () => {
       }
     }
     fetchRecipes();
-  }, [query]);
+  }, [query, page]);
 
   const handleToggleFilters = () => {
     setIsFilterVisible((prev) => !prev);
@@ -73,11 +75,14 @@ const SearchRecipesScreen = () => {
         {isLoading ? (
           "Loading..."
         ) : (
-          <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {recipes.map((recipe) => (
-              <Card {...recipe} key={recipe._id} />
-            ))}
-          </div>
+          <>
+            <div className="mb-8 mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {recipes.map((recipe) => (
+                <Card {...recipe} key={recipe._id} />
+              ))}
+            </div>
+            <PaginationNav />
+          </>
         )}
       </Container>
     </section>

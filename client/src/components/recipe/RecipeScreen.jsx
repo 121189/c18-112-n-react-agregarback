@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Container from "../Container";
 import IngredientsSection from "./IngredientsSection";
 import IntroSection from "./IntroSection";
 import StepsSection from "./StepsSection";
 import CommentsSection from "./CommentsSection";
+import { useParams } from "react-router-dom";
+import Axios from "axios";
+import { useSelector } from "react-redux";
 
 const ingredients = [
   "2 huevos grandes",
@@ -49,6 +52,34 @@ const comments = [
 ];
 
 const RecipeScreen = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
+  const [recipe, setRecipe] = useState(null);
+  const { id } = useParams();
+  const {
+    user: { token },
+  } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    async function fetchRecipe() {
+      setIsLoading(true);
+      try {
+        console.log(token);
+        const response = await Axios.get(`/recipe/${id}`, {
+          withCredentials: true,
+        });
+
+        console.log(response.data);
+        setRecipe(response.data);
+        setIsLoading(false);
+      } catch (error) {
+        setIsLoading(false);
+        console.log(error.message);
+      }
+    }
+    fetchRecipe();
+  }, []);
+
   return (
     <article className="min-h-screen bg-gray-100">
       <Container classes="space-y-6">
