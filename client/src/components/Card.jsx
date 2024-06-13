@@ -1,12 +1,57 @@
-import React, { useState } from "react";
+import { addFavorite, removeFavorite } from "@/api/route";
+import React, { useEffect, useState } from "react";
+import { set } from "react-hook-form";
 import { Link } from "react-router-dom";
 
-const Card = ({ _id, title, description, coverImage, owner }) => {
+const Card = ({ _id, title, description, coverImage, owner, setNewRecipe }) => {
   const [isLiked, setIsLiked] = useState(false);
+  const[userId, setUserId] = useState("");
 
-  const handleClickLike = () => {
-    setIsLiked((prev) => !prev);
+  const handleClickLike = async () => {
+    const newLikedState = !isLiked;
+    setIsLiked(newLikedState);
+
+    if (newLikedState) {
+      await handleAddFavorite(_id);
+    } else {
+      await handleRemoveFavorite(_id);
+    }
   };
+
+  const handleAddFavorite = async () => {
+    try {
+      if(isLiked){
+        const response = await addFavorite(_id);
+        if (response.ok) {
+          setNewRecipe(response.recipe);
+          console.log(response.recipe);
+          setUserId(response.userId);       
+        }
+      }
+    } catch (error) {
+    }
+  }
+
+  const handleRemoveFavorite = async () => {
+    try {
+      const response = await removeFavorite(_id);
+      if (response.ok) {
+        setNewRecipe(response.recipe);
+        console.log(response.recipe + " eliminado");
+        setUserId(response.userId);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if(isLiked){
+      handleAddFavorite(_id);
+    }else{
+      handleRemoveFavorite(_id);
+    }
+  },[isLiked]);
 
   return (
     <div className="max-w-xl overflow-hidden rounded-md bg-white shadow-md">
