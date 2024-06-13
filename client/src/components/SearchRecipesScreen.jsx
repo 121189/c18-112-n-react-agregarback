@@ -1,10 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "./Card";
 import Container from "./Container";
 import Filters from "./Filters";
+import { useSearchParams } from "react-router-dom";
+import Axios from "axios";
 
 const SearchRecipesScreen = () => {
   const [isFilterVisible, setIsFilterVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
+  const [searchParams] = useSearchParams();
+  const [recipes, setRecipes] = useState([]);
+  const query = searchParams.get("query");
+
+  useEffect(() => {
+    async function fetchRecipes() {
+      setIsLoading(true);
+      try {
+        const response = await Axios.post("/recipe/search", {
+          keywords: query,
+        });
+
+        console.log(response.data);
+        setRecipes(response.data.recipes);
+        setIsLoading(false);
+      } catch (error) {
+        setIsLoading(false);
+        console.log(error.message);
+      }
+    }
+    fetchRecipes();
+  }, [query]);
 
   const handleToggleFilters = () => {
     setIsFilterVisible((prev) => !prev);
@@ -14,7 +40,12 @@ const SearchRecipesScreen = () => {
     <section className="min-h-screen bg-gray-100 pt-6">
       <Container>
         <div className="mb-3 flex justify-between">
-          <h2 className="text-2xl font-semibold">Resultados para "ensalada"</h2>
+          <h2 className="text-2xl font-semibold">
+            {recipes.length === 0
+              ? "No se encontraron resultados "
+              : "Resultados "}{" "}
+            para "{query}"
+          </h2>
           <button
             onClick={handleToggleFilters}
             className="flex items-center rounded-lg bg-orange-500 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-orange-400 focus:outline-none focus:ring-4 focus:ring-orange-300"
@@ -39,14 +70,15 @@ const SearchRecipesScreen = () => {
           </button>
         </div>
         {isFilterVisible && <Filters />}
-        <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-        </div>
+        {isLoading ? (
+          "Loading..."
+        ) : (
+          <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {recipes.map((recipe) => (
+              <Card {...recipe} key={recipe._id} />
+            ))}
+          </div>
+        )}
       </Container>
     </section>
   );

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import img1 from "../assets/1.jpg";
 import { Link } from "react-router-dom";
 
-const Card = () => {
+const Card = ({ _id, title, description, coverImage }) => {
   const [isLiked, setIsLiked] = useState(false);
 
   const handleClickLike = () => {
@@ -13,7 +13,7 @@ const Card = () => {
   return (
     <div className="max-w-xl overflow-hidden rounded-md bg-white shadow-md">
       <div className="relative">
-        <img className="w-full select-none" src={img1} alt="recipe img" />
+        <img className="w-full select-none" src={coverImage} alt={title} />
         <div
           className="absolute right-8 top-full flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white text-gray-500 shadow-md"
           onClick={handleClickLike}
@@ -39,15 +39,10 @@ const Card = () => {
         </div>
       </div>
       <div className="p-4">
-        <Link to="/recipe/12345678">
-          <h3 className="mb-2 text-xl font-semibold text-gray-950">
-            Lorem ipsum
-          </h3>
+        <Link to={"/recipe/" + _id}>
+          <h3 className="mb-2 text-xl font-semibold text-gray-950">{title}</h3>
         </Link>
-        <p className="mb-2 text-sm text-gray-700">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum nulla
-          commodi labore.
-        </p>
+        <p className="mb-2 text-sm text-gray-700">{description}</p>
         <div className="flex items-center gap-2 text-gray-500">
           <svg
             className="h-6 w-6"

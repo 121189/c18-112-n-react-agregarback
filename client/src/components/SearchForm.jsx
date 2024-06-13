@@ -7,8 +7,8 @@ const SearchForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(searchInput);
     navigate("/search?query=" + searchInput);
+    setSearchInput("");
   };
 
   return (
