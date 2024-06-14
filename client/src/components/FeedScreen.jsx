@@ -13,6 +13,7 @@ const FeedScreen = () => {
   const getRecipes = async () => {
     try {
       const response = await getFollowingRecipes(currentPage);
+      console.log(response.recipes);
       setRecipes(response.recipes);
       setCurrentPage(response.page);
       setTotalPages(response.pages);
@@ -21,13 +22,16 @@ const FeedScreen = () => {
         setRecipesErrors("No hay recetas");
       }
       console.log(response);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   useEffect(() => {
     getRecipes(currentPage);
   }, [currentPage]);
 
+  
 
   return recipes.length === 0? (
     <div id="recipesFeed" className="mt-4 p-6 ring-1 ring-inset ring-gray-500">
