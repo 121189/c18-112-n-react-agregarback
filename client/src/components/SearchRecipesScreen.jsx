@@ -78,7 +78,7 @@ const SearchRecipesScreen = () => {
           <>
             <div className="mb-8 mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {recipes.map((recipe) => (
-                <Card {...recipe} key={recipe._id} />
+                <Card {...recipe} owner={recipe.owner.name} key={recipe._id} />
               ))}
             </div>
             <PaginationNav />

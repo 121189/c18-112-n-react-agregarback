@@ -2,7 +2,17 @@ import { addFavorite, removeFavorite } from "@/api/route";
 import React, { useEffect, useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 
-const Card = ({ _id, title, description, coverImage, owner, ownerId, setNewRecipe, isLikedRecipe, recipe }) => {
+const Card = ({
+  _id,
+  title,
+  description,
+  coverImage,
+  owner,
+  ownerId,
+  setNewRecipe,
+  isLikedRecipe,
+  recipe,
+}) => {
   const navigate = useNavigate();
   const [isLiked, setIsLiked] = useState(false);
 
@@ -19,16 +29,13 @@ const Card = ({ _id, title, description, coverImage, owner, ownerId, setNewRecip
 
   const handleAddFavorite = async () => {
     try {
-      
-        const response = await addFavorite(_id);
-        if (response.ok) {
-          setNewRecipe(response.recipe);
-          console.log(response.recipe);
-        }
-      
-    } catch (error) {
-    }
-  }
+      const response = await addFavorite(_id);
+      if (response.ok) {
+        setNewRecipe(response.recipe);
+        console.log(response.recipe);
+      }
+    } catch (error) {}
+  };
 
   const handleRemoveFavorite = async () => {
     try {
@@ -42,17 +49,19 @@ const Card = ({ _id, title, description, coverImage, owner, ownerId, setNewRecip
     }
   };
 
-
   useEffect(() => {
     setIsLiked(isLikedRecipe);
   }, [isLikedRecipe]);
 
- 
   return (
-    <div className="max-w-xl overflow-hidden rounded-md bg-white shadow-md"  >
+    <div className="max-w-xl overflow-hidden rounded-md bg-white shadow-md">
       <div className="relative">
-        <div className="w-full h-48" onClick={() => navigate("/recipe/"+ _id)  } >
-          <img className="select-none object-cover object-center w-full h-full" src={coverImage} alt={title} />
+        <div className="h-48 w-full" onClick={() => navigate("/recipe/" + _id)}>
+          <img
+            className="h-full w-full select-none object-cover object-center"
+            src={coverImage}
+            alt={title}
+          />
         </div>
 
         <div
@@ -85,7 +94,9 @@ const Card = ({ _id, title, description, coverImage, owner, ownerId, setNewRecip
         </Link>
         <p className="mb-2 text-sm text-gray-700">{description}</p>
         <Link
-         className="flex items-center gap-2 text-gray-500" to={`/profile/${ownerId}`}>
+          className="flex items-center gap-2 text-gray-500"
+          to={`/profile/${ownerId}`}
+        >
           <svg
             className="h-6 w-6"
             data-slot="icon"
