@@ -13,7 +13,7 @@ const PaginationNav = ({ currentPage, pages, setCurrentPage }) => {
     const pageItems = [];
     for (let index = 1; index <= pages; index++) {
       pageItems.push(
-        <PaginationItem key={index} active={index === currentPage}>
+        <PaginationItem key={index} >
           <PaginationLink
             href="#"
             onClick={(e) => {
