@@ -21,7 +21,7 @@ const Navbar = () => {
   return (
     <nav className="sticky top-0 z-20 flex h-16 w-full items-center bg-orange-500 px-7 text-white shadow-md">
       <a href="/" className="text-2xl font-semibold">
-        QueRapida
+        QUERAPIDA
       </a>
       <SearchForm />
       <div className="flex items-center">
