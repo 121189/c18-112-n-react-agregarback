@@ -87,3 +87,11 @@ Encuadrado dentro de:
 
 [Documentación QA](https://drive.google.com/drive/folders/18q-AU_P1FjuudIUSE-0s0ehn39Sd-PeB?usp=sharing)
 
+
+## Video Presentación
+
+
+![Loom](https://img.shields.io/badge/loom-8000FF.svg?style=for-the-badge&logo=loom-css&logoColor=white)
+
+https://www.loom.com/share/a335c65816b546a4b51da95bc48b9359?sid=03f755ef-f7d6-40cb-ba36-633c137d5ea0
+
