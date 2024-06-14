@@ -2,10 +2,9 @@ import { addFavorite, removeFavorite } from "@/api/route";
 import React, { useEffect, useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 
-const Card = ({ _id, title, description, coverImage, owner, setNewRecipe }) => {
+const Card = ({ _id, title, description, coverImage, owner, setNewRecipe, isLikedRecipe }) => {
   const navigate = useNavigate();
   const [isLiked, setIsLiked] = useState(false);
-  const[userId, setUserId] = useState("");
 
   const handleClickLike = async () => {
     const newLikedState = !isLiked;
@@ -20,14 +19,13 @@ const Card = ({ _id, title, description, coverImage, owner, setNewRecipe }) => {
 
   const handleAddFavorite = async () => {
     try {
-      if(isLiked){
+      
         const response = await addFavorite(_id);
         if (response.ok) {
           setNewRecipe(response.recipe);
           console.log(response.recipe);
-          setUserId(response.userId);       
         }
-      }
+      
     } catch (error) {
     }
   }
@@ -38,21 +36,18 @@ const Card = ({ _id, title, description, coverImage, owner, setNewRecipe }) => {
       if (response.ok) {
         setNewRecipe(response.recipe);
         console.log(response.recipe + " eliminado");
-        setUserId(response.userId);
       }
     } catch (error) {
       console.log(error);
     }
   };
 
-  useEffect(() => {
-    if(isLiked){
-      handleAddFavorite(_id);
-    }else{
-      handleRemoveFavorite(_id);
-    }
-  },[isLiked]);
 
+  useEffect(() => {
+    setIsLiked(isLikedRecipe);
+  }, [isLikedRecipe]);
+
+ 
   return (
     <div className="max-w-xl overflow-hidden rounded-md bg-white shadow-md"  >
       <div className="relative">
