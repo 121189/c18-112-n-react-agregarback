@@ -2,7 +2,7 @@ import { addFavorite, removeFavorite } from "@/api/route";
 import React, { useEffect, useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 
-const Card = ({ _id, title, description, coverImage, owner, setNewRecipe, isLikedRecipe }) => {
+const Card = ({ _id, title, description, coverImage, owner, ownerId, setNewRecipe, isLikedRecipe, recipe }) => {
   const navigate = useNavigate();
   const [isLiked, setIsLiked] = useState(false);
 
@@ -84,7 +84,8 @@ const Card = ({ _id, title, description, coverImage, owner, setNewRecipe, isLike
           <h3 className="mb-2 text-xl font-semibold text-gray-950">{title}</h3>
         </Link>
         <p className="mb-2 text-sm text-gray-700">{description}</p>
-        <div className="flex items-center gap-2 text-gray-500">
+        <Link
+         className="flex items-center gap-2 text-gray-500" to={`/profile/${ownerId}`}>
           <svg
             className="h-6 w-6"
             data-slot="icon"
@@ -102,7 +103,7 @@ const Card = ({ _id, title, description, coverImage, owner, setNewRecipe, isLike
             ></path>
           </svg>
           {owner}
-        </div>
+        </Link>
       </div>
     </div>
   );
