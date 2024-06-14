@@ -99,15 +99,19 @@ const ProfileScreen = () => {
         className="rounded-xl bg-white p-4 shadow-md ring-0 ring-inherit ring-slate-300"
       >
         <div className="relative flex w-full items-center">
-          <button
-            onClick={() => {
-              setEditing(!editing);
-            }}
-            className="absolute right-0 top-0 flex items-center gap-1 rounded bg-gray-200 px-2 text-sm font-semibold"
-          >
-            <Pencil1Icon /> Editar perfil
-          </button>
-          {editing ? (
+          {
+            isMyProfile && (
+            <button
+              onClick={() => {
+                setEditing(!editing);
+              }}
+              className="absolute right-0 top-0 flex items-center gap-1 rounded bg-gray-200 px-2 text-sm font-semibold"
+            >
+              <Pencil1Icon /> Editar perfil
+            </button>
+            )
+          }
+          {editing  ? (
             <ProfileForm
               user={user}
               followers={followers}
