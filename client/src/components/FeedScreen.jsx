@@ -13,7 +13,6 @@ const FeedScreen = () => {
   const getRecipes = async () => {
     try {
       const response = await getFollowingRecipes(currentPage);
-      console.log(response.recipes);
       setRecipes(response.recipes);
       setCurrentPage(response.page);
       setTotalPages(response.pages);
@@ -33,8 +32,8 @@ const FeedScreen = () => {
 
   
 
-  return recipes.length === 0? (
-    <div id="recipesFeed" className="mt-4 p-6 ring-1 ring-inset ring-gray-500">
+  return recipes.length > 0? (
+    <div id="recipesFeed" className="mt-4 p-6 shadow-md ring-0 ring-inherit ring-slate-300">
       <h1 className="mb-4 text-2xl font-semibold">Recetas ({recipeTotal})</h1>
       <RecipesGrid
         recipes={recipes}
