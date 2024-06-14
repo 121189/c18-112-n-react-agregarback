@@ -22,6 +22,7 @@ const RecipesGrid = ({
                 title={recipe.title}
                 description={recipe.description}
                 coverImage={recipe.coverImage}
+                isLikedRecipe={recipe.isLiked}
                 owner={!owner?.name ? recipe.owner.name : owner.name}
                 _id={recipe._id}
                 recipe={newRecipe}
