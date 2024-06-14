@@ -70,3 +70,29 @@ export function removeFavorite(id) {
         }
     });
 }
+
+//Funcion para obtener ultimas recetas
+export function getLastRecipes(page) {
+    return new Promise(async(resolve, reject) => {
+        try {
+            const response = await axios.post(`http://localhost:8000/api/recipe/search/${page}`, {});
+            const result = await response.data;
+            resolve(result);
+        } catch (error) {
+            reject(error);
+        }
+    });
+}
+
+//Funcion para obtener recetas de usuarios seguidos
+export function getFollowingRecipes(page) {
+    return new Promise(async(resolve, reject) => {
+        try {
+            const response = await axios.post(`http://localhost:8000/api/recipe/following/${page}`,{}, { withCredentials: true });
+            const result = await response.data;
+            resolve(result);
+        } catch (error) {
+            reject(error);
+        }
+    });
+}
