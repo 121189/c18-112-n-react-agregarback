@@ -1,9 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
+import Axios from "axios";
 
-const Filters = () => {
+const Filters = ({ query, setRecipes, page = "" }) => {
+  const [maxDuration, setMaxDuration] = useState("");
+  const [ingredientsQty, setIngredientsQty] = useState("");
+  const [portionsQty, setPortionsQty] = useState("");
+  const [orderBy, setOrderBy] = useState("title");
+  const [order, setOrder] = useState(1);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    console.log({
+      keywords: query,
+      maxDuration,
+      ingredientsQty,
+      portionsQty,
+      orderBy,
+      order,
+    });
+
+    try {
+      const response = await Axios.post(`/recipe/search/${page}`, {
+        keywords: query,
+        maxDuration,
+        ingredientsQty,
+        portionsQty,
+        orderBy,
+        order,
+      });
+
+      console.log(response.data);
+      setRecipes(response.data.recipes);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   return (
     <div className="min-h-14 overflow-hidden rounded-md bg-white shadow-md">
-      <form action="" className="space-y-4 p-6 text-gray-700 md:space-y-6">
+      <form
+        onSubmit={handleSubmit}
+        className="space-y-4 p-6 text-gray-700 md:space-y-6"
+      >
         <div className="grid grid-cols-2 gap-8">
           <div>
             <label
@@ -13,10 +52,13 @@ const Filters = () => {
               Duración máxima en minutos
             </label>
             <input
+              value={maxDuration}
               id="maxDuration"
+              name="maxDuration"
               type="number"
               className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 sm:text-sm"
               placeholder="Introduce la duración máxima en minutos"
+              onChange={(e) => setMaxDuration(e.target.value)}
             />
           </div>
           <div>
@@ -28,9 +70,12 @@ const Filters = () => {
             </label>
             <input
               id="ingredientsQty"
+              name="ingredientsQty"
+              value={ingredientsQty}
               type="number"
               className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 sm:text-sm"
               placeholder="Introduce la cantidad de ingredientes"
+              onChange={(e) => setIngredientsQty(e.target.value)}
             />
           </div>
         </div>
@@ -46,8 +91,11 @@ const Filters = () => {
             <input
               id="portionsQty"
               type="number"
+              name="portionsQty"
+              value={portionsQty}
               className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 sm:text-sm"
               placeholder="Introduce la cantidad de raciones"
+              onChange={(e) => setPortionsQty(e.target.value)}
             />
           </div>
           <div>
@@ -61,11 +109,33 @@ const Filters = () => {
               name="sortBy"
               id="status"
               className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 sm:text-sm"
+              onChange={(e) => {
+                const value = e.target.value;
+
+                switch (value) {
+                  case "titleAsc":
+                    setOrderBy("title");
+                    setOrder(1);
+                    break;
+                  case "titleDesc":
+                    setOrderBy("title");
+                    setOrder(-1);
+                    break;
+                  case "durationAsc":
+                    setOrderBy("duration");
+                    setOrder(1);
+                    break;
+                  case "durationDesc":
+                    setOrderBy("duration");
+                    setOrder(-1);
+                    break;
+                }
+              }}
             >
-              <option value="published">Título A - Z</option>
-              <option value="draft">Título Z - A</option>
-              <option value="draft">Duración Asc</option>
-              <option value="draft">Duración Desc</option>
+              <option value="titleAsc">Título A - Z</option>
+              <option value="titleDesc">Título Z - A</option>
+              <option value="durationAsc">Duración Asc</option>
+              <option value="durationDesc">Duración Desc</option>
             </select>
           </div>
         </div>

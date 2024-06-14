@@ -71,7 +71,9 @@ const SearchRecipesScreen = () => {
             <span>Filtros</span>
           </button>
         </div>
-        {isFilterVisible && <Filters />}
+        {isFilterVisible && (
+          <Filters query={query} setRecipes={setRecipes} page={page} />
+        )}
         {isLoading ? (
           "Loading..."
         ) : (
