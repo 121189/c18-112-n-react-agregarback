@@ -1,9 +1,9 @@
 import { addFavorite, removeFavorite } from "@/api/route";
 import React, { useEffect, useState } from "react";
-import { set } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 const Card = ({ _id, title, description, coverImage, owner, setNewRecipe }) => {
+  const navigate = useNavigate();
   const [isLiked, setIsLiked] = useState(false);
   const[userId, setUserId] = useState("");
 
@@ -54,9 +54,9 @@ const Card = ({ _id, title, description, coverImage, owner, setNewRecipe }) => {
   },[isLiked]);
 
   return (
-    <div className="max-w-xl overflow-hidden rounded-md bg-white shadow-md">
+    <div className="max-w-xl overflow-hidden rounded-md bg-white shadow-md"  >
       <div className="relative">
-        <div className="w-full h-48">
+        <div className="w-full h-48" onClick={() => navigate("/recipe/"+ _id)  } >
           <img className="select-none object-cover object-center w-full h-full" src={coverImage} alt={title} />
         </div>
 
