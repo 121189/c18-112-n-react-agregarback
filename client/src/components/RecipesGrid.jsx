@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import Card from "./Card";
 import PaginationNav from "./PaginationNav";
 
@@ -10,31 +10,34 @@ const RecipesGrid = ({
   setCurrentPage,
   pages,
 }) => {
+  const [newRecipe, setNewRecipe] = useState({});
   return recipes ? (
     <Fragment>
-    <div className="flex flex-col">
-      <div className="grid grid-cols-3 gap-4 max-lg:grid-cols-1">
-        {recipes.map((recipe, index) => {
-          return (
-            <Card
-              key={index}
-              title={recipe.title}
-              description={recipe.description}
-              coverImage={recipe.coverImage}
-              owner={owner.name}
-              id={recipe._id}
-            />
-          );
-        })}
-      </div>
-    </div>
-        <div className="w-full flex justify-center">
-          <PaginationNav
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}            
-            pages={pages}
-          />
+      <div className="flex flex-col">
+        <div className="grid grid-cols-3 gap-4 max-lg:grid-cols-1">
+          {recipes.map((recipe, index) => {
+            return (
+              <Card
+                key={index}
+                title={recipe.title}
+                description={recipe.description}
+                coverImage={recipe.coverImage}
+                owner={!owner?.name ? recipe.owner.name : owner.name}
+                _id={recipe._id}
+                recipe={newRecipe}
+                setNewRecipe={setNewRecipe}
+              />
+            );
+          })}
         </div>
+      </div>
+      <div className="flex w-full justify-center">
+        <PaginationNav
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          pages={pages}
+        />
+      </div>
     </Fragment>
   ) : (
     <div className="flex h-96 items-center justify-center max-lg:text-center">

@@ -78,9 +78,9 @@ module.exports.searchRecipes = async (req, res) => {
       .collation({ locale: "en", strength: 2 })
       .skip(skip)
       .limit(limit)
-      .sort(sort)
+      .sort(sort).populate("owner")
     res.status(200)
-    res.json({ recipes, pages, page })
+    res.json({ recipes, pages, page, total })
   } catch (error) {
     res.status(500)
     res.json({ error: error })
@@ -157,7 +157,7 @@ module.exports.addFavorite = async (req, res) => {
     recipe.favorites.push(userId)
     await recipe.save()
     res.status(200)
-    res.json({recipe, message: "Receta añadida a favoritos", ok:true})
+    res.json({recipe, message: "Receta añadida a favoritos", ok:true, userId: userId})
   } catch (error) {
     res.status(500)
     res.json({ error: error })
@@ -188,7 +188,7 @@ module.exports.removeFavorite = async (req, res) => {
     recipe.favorites = recipe.favorites.filter(fav => fav.toString() !== userId)
     await recipe.save()
     res.status(200)
-    res.json(recipe)
+    res.json({recipe, message: "Receta eliminada de favoritos", ok:true, userId: userId})
   } catch (error) {
     res.status(500)
     res.json({ error: error })
@@ -267,7 +267,7 @@ module.exports.getFollowingRecipes = async (req, res) => {
       .sort(sort)
     const total = await Recipe.countDocuments(filter)
     const pages = Math.ceil(total / limit)
-    res.status(200).json({ recipes, page, pages })
+    res.status(200).json({ recipes, page, pages, total })
   } catch (error) {
     res.status(500).json({ error: error.message })
   }
