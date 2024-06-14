@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import RecipesGrid from "./RecipesGrid";
-import { getLastRecipes } from "@/api/route";
+import { findUser, getLastRecipes } from "@/api/route";
 import { set } from "react-hook-form";
 import { current } from "@reduxjs/toolkit";
 
@@ -10,6 +10,8 @@ const LastRecipesScreen = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [recipeTotal, setRecipeTotal] = useState(0);
+  const[user, setUser] = useState(undefined);
+
   const getRecipes = async () => {
     try {
       const response = await getLastRecipes(currentPage);
@@ -20,13 +22,57 @@ const LastRecipesScreen = () => {
       if (recipes.length === 0) {
         setRecipesErrors("No hay recetas");
       }
-      console.log(response);
+      if(user && recipes.length > 0){
+        const newNewcipes = recipes.map((recipe) => {
+          recipe.isLiked = user.favorites.includes(recipe._id);
+          return recipe;
+        });
+        console.log(newNewcipes);
+        setRecipes(newNewcipes);
+      }
     } catch (error) {}
   };
+
+  const fetchUser = async () => {
+    const userId = localStorage.getItem("queRapidaId");
+    if (userId) {
+        try {
+          if (userId) {
+            const response = await findUser(userId);
+            setUser(response.user);
+          }
+        } catch (error) {
+        }
+    }
+  };
+
+
+  const checkLiked = () => {
+    if(user && recipes.length > 0){
+      const newNewcipes = recipes.map((recipe) => {
+        recipe.isLiked = user.favorites.includes(recipe._id);
+        return recipe;
+      });
+      console.log(newNewcipes);
+      setRecipes(newNewcipes);
+    }
+  }
 
   useEffect(() => {
     getRecipes(currentPage);
   }, [currentPage]);
+
+  useEffect(() => {
+    checkLiked();
+  },[user]);
+
+  useEffect(() => {
+    
+      fetchUser();
+    
+  },[]);
+
+
   return (
     <div id="recipesLast" className="mt-4 p-6 ring-1 ring-inset ring-gray-500">
       <h1 className="mb-4 text-2xl font-semibold">Recetas ({recipeTotal})</h1>
