@@ -31,6 +31,7 @@ module.exports.findAllRecipes = async (req, res) => {
 
 //find all filtered recipes with paginator, 6 recipes per page and send the total of pages and actual page size
 module.exports.searchRecipes = async (req, res) => {
+
   try {
     const {
       ingredientsQty,
@@ -74,6 +75,10 @@ module.exports.searchRecipes = async (req, res) => {
     }
     const pages = Math.ceil(total / limit)
     const skip = (page - 1) * limit
+
+
+
+
     const recipes = await Recipe.find(filter)
       .collation({ locale: "en", strength: 2 })
       .skip(skip)
