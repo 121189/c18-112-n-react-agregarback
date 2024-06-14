@@ -90,6 +90,7 @@ export function getFollowingRecipes(page) {
         try {
             const response = await axios.post(`http://localhost:8000/api/recipe/following/${page}`,{}, { withCredentials: true });
             const result = await response.data;
+            console.log(result);
             resolve(result);
         } catch (error) {
             reject(error);
