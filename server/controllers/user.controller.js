@@ -9,6 +9,7 @@ const Recipe = require("../models/recipe.model");
 // Controladores básicos de CRUD
 module.exports.createUser = async (req, res) => {
   try {
+    
     const newUser = await User.create(req.body);
     res.status(200);
     res.json({ user: newUser });
@@ -71,6 +72,14 @@ module.exports.findUser = async (req, res) => {
 };
 module.exports.updateUser = async (req, res) => {
   try {
+
+    if(req.file){
+      // set req.body.image to the serverhost/imagepath  
+      
+    const imageUrl = `${req.protocol}://${req.get("host")}/${req.file.destination}${req.file.filename}`;
+    req.body.image = imageUrl;
+  }
+
     const updatedUser = await User.findOneAndUpdate(
       { _id: req.params.id },
       req.body,
@@ -288,7 +297,7 @@ module.exports.follow = async (req, res) => {
   try {
     const followerId = req.body.userId; // ID del usuario logueado
     const followingId = req.params.id;  // ID del usuario a seguir
-
+console.log(followerId, followingId);
     if (followerId === followingId) {
       res.status(400).json({ error: "No puedes seguirte a ti mismo" });
       return;
