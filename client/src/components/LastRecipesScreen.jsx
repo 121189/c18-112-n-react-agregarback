@@ -74,7 +74,7 @@ const LastRecipesScreen = () => {
 
 
   return (
-    <div id="recipesLast" className="mt-4 p-6 ring-1 ring-inset ring-gray-500">
+    <div id="recipesLast" className="mt-4 p-6 shadow-md ring-0 ring-inherit ring-slate-300">
       <h1 className="mb-4 text-2xl font-semibold">Recetas ({recipeTotal})</h1>
       <RecipesGrid
         recipes={recipes}
