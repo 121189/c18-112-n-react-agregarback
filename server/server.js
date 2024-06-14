@@ -2,9 +2,11 @@ const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const app = express();
+
 const port = 8000;
 require('dotenv').config();
 require('./config/database.config');
+
 
 app.use(cookieParser());
 app.use(express.json());
@@ -17,6 +19,10 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
+
+// Servir imagenes
+app.use('/uploads', express.static('uploads'));
+
 
 //Routes
 const userRoutes = require('./routes/user.routes');
