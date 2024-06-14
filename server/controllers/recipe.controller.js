@@ -269,7 +269,7 @@ module.exports.getFollowingRecipes = async (req, res) => {
       .collation({ locale: "en", strength: 2 })
       .skip(skip)
       .limit(limit)
-      .sort(sort)
+      .sort(sort).populate("owner")
     const total = await Recipe.countDocuments(filter)
     const pages = Math.ceil(total / limit)
     res.status(200).json({ recipes, page, pages, total })
