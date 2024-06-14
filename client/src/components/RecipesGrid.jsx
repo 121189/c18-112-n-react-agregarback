@@ -5,17 +5,22 @@ import PaginationNav from "./PaginationNav";
 const RecipesGrid = ({
   recipes,
   recipeErrors,
-  owner,
+  owner=undefined,
   currentPage,
   setCurrentPage,
   pages,
 }) => {
   const [newRecipe, setNewRecipe] = useState({});
+
+
+console.log(recipes);
+
   return recipes ? (
     <Fragment>
       <div className="flex flex-col">
         <div className="grid grid-cols-3 gap-4 max-lg:grid-cols-1">
           {recipes.map((recipe, index) => {
+        
             return (
               <Card
                 key={index}
@@ -23,9 +28,9 @@ const RecipesGrid = ({
                 description={recipe.description}
                 coverImage={recipe.coverImage}
                 isLikedRecipe={recipe.isLiked}
-                owner={!owner?.name ? recipe.owner.name : owner.name}
+                owner={!owner ? recipe.owner.name : owner.name}
+                ownerId={!owner?._id ? recipe.owner._id : owner._id}
                 _id={recipe._id}
-                recipe={newRecipe}
                 setNewRecipe={setNewRecipe}
               />
             );
