@@ -19,7 +19,7 @@ export function findUser(id,page) {
 export function followUser(id) {
     return new Promise(async (resolve, reject) => {
         try {
-            const response = await axios.post(`http://localhost:8000/api/user/${id}/follow`, {}, { withCredentials: true });
+            const response = await axios.post(`http://localhost:8000/api/user/${id}/follow/user`, {}, { withCredentials: true });
             const result = await response.data;
             resolve(result);
         } catch (error) {
@@ -91,6 +91,24 @@ export function getFollowingRecipes(page) {
             const response = await axios.post(`http://localhost:8000/api/recipe/following/${page}`,{}, { withCredentials: true });
             const result = await response.data;
             console.log(result);
+            resolve(result);
+        } catch (error) {
+            reject(error);
+        }
+    });
+}
+
+
+export function updateUser(form, id) {
+    return new Promise(async(resolve, reject) => {
+        try {
+            const formData = new FormData();
+            // name, bio and image
+            formData.append("name", form.name);
+            formData.append("bio", form.bio);
+            formData.append("image", form.image);
+            const response = await axios.put(`http://localhost:8000/api/user/${id}`, formData, { withCredentials: true });
+            const result = await response.data;
             resolve(result);
         } catch (error) {
             reject(error);
