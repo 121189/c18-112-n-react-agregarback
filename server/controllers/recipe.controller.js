@@ -31,7 +31,6 @@ module.exports.findAllRecipes = async (req, res) => {
 
 //find all filtered recipes with paginator, 6 recipes per page and send the total of pages and actual page size
 module.exports.searchRecipes = async (req, res) => {
-
   try {
     const {
       ingredientsQty,
@@ -76,14 +75,12 @@ module.exports.searchRecipes = async (req, res) => {
     const pages = Math.ceil(total / limit)
     const skip = (page - 1) * limit
 
-
-
-
     const recipes = await Recipe.find(filter)
       .collation({ locale: "en", strength: 2 })
       .skip(skip)
       .limit(limit)
-      .sort(sort).populate("owner")
+      .sort(sort)
+      .populate("owner")
     res.status(200)
     res.json({ recipes, pages, page, total })
   } catch (error) {
@@ -162,7 +159,12 @@ module.exports.addFavorite = async (req, res) => {
     recipe.favorites.push(userId)
     await recipe.save()
     res.status(200)
-    res.json({recipe, message: "Receta añadida a favoritos", ok:true, userId: userId})
+    res.json({
+      recipe,
+      message: "Receta añadida a favoritos",
+      ok: true,
+      userId: userId,
+    })
   } catch (error) {
     res.status(500)
     res.json({ error: error })
@@ -193,7 +195,12 @@ module.exports.removeFavorite = async (req, res) => {
     recipe.favorites = recipe.favorites.filter(fav => fav.toString() !== userId)
     await recipe.save()
     res.status(200)
-    res.json({recipe, message: "Receta eliminada de favoritos", ok:true, userId: userId})
+    res.json({
+      recipe,
+      message: "Receta eliminada de favoritos",
+      ok: true,
+      userId: userId,
+    })
   } catch (error) {
     res.status(500)
     res.json({ error: error })
@@ -269,7 +276,8 @@ module.exports.getFollowingRecipes = async (req, res) => {
       .collation({ locale: "en", strength: 2 })
       .skip(skip)
       .limit(limit)
-      .sort(sort).populate("owner")
+      .sort(sort)
+      .populate("owner")
     const total = await Recipe.countDocuments(filter)
     const pages = Math.ceil(total / limit)
     res.status(200).json({ recipes, page, pages, total })
