@@ -94,13 +94,9 @@ const Card = ({
         </Link>
         <p className="mb-2 text-sm text-gray-700">{description}</p>
         <Link
-<<<<<<< HEAD
-         className="flex items-center gap-2 text-gray-500" to={`/profile/${ownerId||owner._id}`}>
-=======
           className="flex items-center gap-2 text-gray-500"
           to={`/profile/${ownerId}`}
         >
->>>>>>> 64655f44fb0fed9841cb104776d85f9abce0532b
           <svg
             className="h-6 w-6"
             data-slot="icon"
