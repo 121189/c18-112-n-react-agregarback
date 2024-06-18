@@ -13,7 +13,6 @@ const IntroSection = ({
   fetchRecipe,
 }) => {
   const handleAddFavorite = async () => {
-    console.log("click corazon");
     try {
       const response = await Axios.post(
         `/recipe/favorite/${recipeId}`,
@@ -26,12 +25,10 @@ const IntroSection = ({
       console.log(response.data);
       fetchRecipe();
     } catch (error) {
-      console.log(error.message);
     }
   };
 
   const handleDeleteFavorite = async () => {
-    console.log("click corazon");
     try {
       const response = await Axios.delete(`/recipe/favorite/${recipeId}`, {
         withCredentials: true,
@@ -40,7 +37,6 @@ const IntroSection = ({
       console.log(response.data);
       fetchRecipe();
     } catch (error) {
-      console.log(error.message);
     }
   };
 
