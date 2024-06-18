@@ -13,7 +13,6 @@ const RecipesGrid = ({
   const [newRecipe, setNewRecipe] = useState({});
 
 
-console.log(recipes);
 
   return recipes ? (
     <Fragment>
