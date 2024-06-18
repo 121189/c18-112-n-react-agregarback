@@ -23,7 +23,6 @@ const SearchRecipesScreen = () => {
           keywords: query,
         });
 
-        console.log(response.data);
         setRecipes(response.data.recipes);
         setIsLoading(false);
       } catch (error) {
