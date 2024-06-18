@@ -19,6 +19,7 @@ const LastRecipesScreen = () => {
       setCurrentPage(response.page);
       setTotalPages(response.pages);
       setRecipeTotal(response.total);
+      console.log(response);
       if (recipes.length === 0) {
         setRecipesErrors("No hay recetas");
       }
@@ -27,7 +28,6 @@ const LastRecipesScreen = () => {
           recipe.isLiked = user.favorites.includes(recipe._id);
           return recipe;
         });
-        console.log(newNewcipes);
         setRecipes(newNewcipes);
       }
     } catch (error) {}
@@ -53,7 +53,6 @@ const LastRecipesScreen = () => {
         recipe.isLiked = user.favorites.includes(recipe._id);
         return recipe;
       });
-      console.log(newNewcipes);
       setRecipes(newNewcipes);
     }
   }
