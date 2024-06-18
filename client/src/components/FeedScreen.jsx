@@ -17,12 +17,11 @@ const FeedScreen = () => {
       setCurrentPage(response.page);
       setTotalPages(response.pages);
       setRecipeTotal(response.total);
+      console.log(response);
       if (recipes.length === 0) {
         setRecipesErrors("No hay recetas");
       }
-      console.log(response);
     } catch (error) {
-      console.log(error);
     }
   }
 
