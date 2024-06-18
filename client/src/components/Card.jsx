@@ -32,7 +32,6 @@ const Card = ({
       const response = await addFavorite(_id);
       if (response.ok) {
         setNewRecipe(response.recipe);
-        console.log(response.recipe);
       }
     } catch (error) {}
   };
@@ -42,10 +41,8 @@ const Card = ({
       const response = await removeFavorite(_id);
       if (response.ok) {
         setNewRecipe(response.recipe);
-        console.log(response.recipe + " eliminado");
       }
     } catch (error) {
-      console.log(error);
     }
   };
 
