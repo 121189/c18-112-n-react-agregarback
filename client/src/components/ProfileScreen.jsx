@@ -41,7 +41,6 @@ const ProfileScreen = () => {
         setRecipesErrors("No hay recetas");
       }
     } catch (error) {
-      console.log(error);
     }
   };
 
@@ -56,7 +55,6 @@ const ProfileScreen = () => {
       const response = await followUser(id);
       if (response.ok) {
         setShowFollow(true);
-        console.log(showFollow);
         handleUserById(id);
       }
     } catch (error) {}
